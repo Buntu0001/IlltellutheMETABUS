@@ -19,22 +19,31 @@ public class YamlController {
     private void yamlInitialize() {
         if (!questionFile.exists()) {
             System.out.println("question.yml 파일을 생성합니다.");
-            questionYmlFile.set("question.기본문제.문제내용", "대전중앙고등학교의 교장은?");
-            questionYmlFile.set("question.기본문제.선택지.1번", "꿀벌규");
-            questionYmlFile.set("question.기본문제.선택지.2번", "양봉업자");
-            questionYmlFile.set("question.기본문제.선택지.3번", "나뭇잎마을");
-            questionYmlFile.set("question.기본문제.선택지.4번", "장수말벌");
-            questionYmlFile.set("question.기본문제.선택지.5번", "양봉규");
+            questionYmlFile.set("question.기본문제.문제내용", "&f대전중앙고등학교의 교장은?");
+            ArrayList<String> lores = new ArrayList<>();
+            lores.add("&f대전중앙고등학교는 근본없는 고등학교이다.");
+            lores.add("&f이딴 학교의 교장이라니 보나마나");
+            lores.add("&e양봉마스터&f일 가능성이 농후하다.");
+            questionYmlFile.set("question.기본문제.문제상세내용", lores.toArray());
+            questionYmlFile.set("question.기본문제.선택지.1번", "&f꿀벌규");
+            questionYmlFile.set("question.기본문제.선택지.2번", "&f양봉업자");
+            questionYmlFile.set("question.기본문제.선택지.3번", "&f나뭇잎마을");
+            questionYmlFile.set("question.기본문제.선택지.4번", "&f장수말벌");
+            questionYmlFile.set("question.기본문제.선택지.5번", "&f양봉규");
             questionYmlFile.set("question.기본문제.정답", 5);
             questionYmlFile.set("question.기본문제.점수", 523);
             questionYmlFile.set("question.기본문제.제한시간", 523);
 
-            questionYmlFile.set("question.심화문제.문제내용", "마크서버의 주소는?");
-            questionYmlFile.set("question.심화문제.선택지.1번", "bungu.ga");
-            questionYmlFile.set("question.심화문제.선택지.2번", "wyvern.pw");
-            questionYmlFile.set("question.심화문제.선택지.3번", "hitomi.la");
-            questionYmlFile.set("question.심화문제.선택지.4번", "mc.aicoding.kro.kr");
-            questionYmlFile.set("question.심화문제.선택지.5번", "exploit.in");
+            questionYmlFile.set("question.심화문제.문제내용", "&f마크서버의 주소는?");
+            lores.clear();
+            lores.add("&f눈썰미가 좋다면 쉽게 알아낼 수 있다.");
+            lores.add("&f사실 못 알아낸다.");
+            questionYmlFile.set("question.심화문제.문제상세내용", lores.toArray());
+            questionYmlFile.set("question.심화문제.선택지.1번", "&fbungu.ga");
+            questionYmlFile.set("question.심화문제.선택지.2번", "&fwyvern.pw");
+            questionYmlFile.set("question.심화문제.선택지.3번", "&fhitomi.la");
+            questionYmlFile.set("question.심화문제.선택지.4번", "&fmc.aicoding.kro.kr");
+            questionYmlFile.set("question.심화문제.선택지.5번", "&fexploit.in");
             questionYmlFile.set("question.심화문제.정답", 4);
             questionYmlFile.set("question.심화문제.점수", 123);
             questionYmlFile.set("question.심화문제.제한시간", 123);
@@ -51,6 +60,8 @@ public class YamlController {
                 for (String node : questionYmlFile.getConfigurationSection("question").getKeys(false)) {
                     String questionTitle = String.valueOf(node);
                     String questionContext = String.valueOf(questionYmlFile.get("question." + node + ".문제내용"));
+                    ArrayList<String> questionContextLores = new ArrayList<>(questionYmlFile.getStringList("question." + node + ".문제상세내용"));
+
                     ArrayList<String> questionOptions = new ArrayList<>();
                     for (int i = 1; i <= 5; i++) {
                         questionOptions.add(String.valueOf(questionYmlFile.get("question." + node + String.format(".선택지.%d번", i))));
@@ -59,7 +70,7 @@ public class YamlController {
                     int questionScore = (int) questionYmlFile.get("question." + node + ".점수");
                     int questionLimitTime = (int) questionYmlFile.get("question." + node + ".제한시간");
 
-                    Question question = new Question(questionTitle, questionContext, questionOptions, questionAnswer, questionScore, questionLimitTime);
+                    Question question = new Question(questionTitle, questionContext, questionContextLores, questionOptions, questionAnswer, questionScore, questionLimitTime);
                     QuestionList.putQuestion(question);
                     System.out.println(String.format("%s 문제가 등록되었습니다.", questionTitle));
                 }
@@ -69,5 +80,9 @@ public class YamlController {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public void yamlReload() {
+
     }
 }

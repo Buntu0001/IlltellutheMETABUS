@@ -5,3 +5,6 @@ commands:
   문제:
     description: question.yml 로부터 문제를 받아옵니다.
     usage: /문제 [문제이름]
+  문제보기:
+    description: 등록된 문제를 gui로 확인합니다.
+    usage: /문제보기 [문제이름]

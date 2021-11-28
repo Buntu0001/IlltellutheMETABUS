@@ -12,10 +12,13 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         System.out.println("문제 플러그인이 활성화되었습니다.");
         System.out.println("문제 내용은 question.yml 파일을 참조해주세요!");
+        Util.plugin = this;
         checkPluginFolderExist();
         YamlController yamlController = new YamlController(new File(pluginFolder + "\\question.yml"));
 
         getCommand("문제").setExecutor(new CommandListener());
+        getCommand("문제보기").setExecutor(new CommandListener());
+        getServer().getPluginManager().registerEvents(new EventListener(), this);
     }
 
     @Override

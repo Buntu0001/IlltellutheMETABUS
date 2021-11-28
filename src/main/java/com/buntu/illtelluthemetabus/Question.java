@@ -6,14 +6,16 @@ import java.util.HashMap;
 public class Question {
     private String questionTitle;
     private String questionContext;
+    private ArrayList<String> questionContextLores;
     private ArrayList<String> questionOptions = new ArrayList<>();
     private int questionAnswer;
     private int questionScore;
     private int questionLimitTime;
 
-    public Question(String title, String context, ArrayList<String> options, int answer, int score, int limitTime) {
+    public Question(String title, String context, ArrayList<String> lores, ArrayList<String> options, int answer, int score, int limitTime) {
         this.questionTitle = title;
         this.questionContext = context;
+        this.questionContextLores = lores;
         this.questionOptions = options;
         this.questionAnswer = answer;
         this.questionScore = score;
@@ -26,6 +28,10 @@ public class Question {
 
     public String getQuestionContext() {
         return this.questionContext;
+    }
+
+    public ArrayList<String> getQuestionContextLores() {
+        return this.questionContextLores;
     }
 
     public ArrayList<String> getQuestionOptions() {
@@ -58,5 +64,9 @@ class QuestionList {
 
     public static Question getQuestion(String questionTitle) {
         return questionMap.get(questionTitle);
+    }
+
+    public static Boolean containsQuestion(String questionTitle) {
+        return questionMap.containsKey(questionTitle);
     }
 }
