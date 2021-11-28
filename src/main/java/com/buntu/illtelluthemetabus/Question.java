@@ -1,5 +1,7 @@
 package com.buntu.illtelluthemetabus;
 
+import org.bukkit.ChatColor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -66,7 +68,7 @@ class QuestionList {
         return questionMap.get(questionTitle);
     }
 
-    public static Boolean containsQuestion(String questionTitle) {
-        return questionMap.containsKey(questionTitle);
+    public static Boolean containsQuestionByInventoryTitle(String questionTitle) {
+        return questionMap.containsKey(ChatColor.stripColor(questionTitle));
     }
 }

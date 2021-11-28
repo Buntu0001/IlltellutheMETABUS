@@ -10,11 +10,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class Util {
     public static String translate(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
+
     public static ArrayList<String> translate(ArrayList<String> message) {
         ArrayList<String> changeArrayListString = new ArrayList<>(message);
         for (int i = 0; i < changeArrayListString.size(); i++) {
@@ -22,7 +24,16 @@ public class Util {
         }
         return changeArrayListString;
     }
+
+    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf('&') + "[0-9A-FK-OR]");
+
+    public static String stripColorCodes(String input) {
+        return input == null ? null : STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
+    }
+
     public static Plugin plugin;
+    public static YamlController yamlController;
+
     public static void openQuestionGui(Player player, Question question) {
         Inventory inventory = Bukkit.createInventory(null, 9 * 3, Util.translate("&e" + question.getQuestionTitle()));
 
@@ -60,7 +71,7 @@ public class Util {
         questionFifthOptions.setItemMeta(questionFifthOptionsMeta);
 
         inventory.setItem(4, questionBook);
-        inventory.setItem(11, questionFifthOptions);
+        inventory.setItem(11, questionFirstOptions);
         inventory.setItem(12, questionSecondOptions);
         inventory.setItem(13, questionThirdOptions);
         inventory.setItem(14, questionFourthOptions);

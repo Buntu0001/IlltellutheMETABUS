@@ -14,7 +14,7 @@ public final class Main extends JavaPlugin {
         System.out.println("문제 내용은 question.yml 파일을 참조해주세요!");
         Util.plugin = this;
         checkPluginFolderExist();
-        YamlController yamlController = new YamlController(new File(pluginFolder + "\\question.yml"));
+        Util.yamlController = new YamlController(new File(pluginFolder + "\\question.yml"));
 
         getCommand("문제").setExecutor(new CommandListener());
         getCommand("문제보기").setExecutor(new CommandListener());

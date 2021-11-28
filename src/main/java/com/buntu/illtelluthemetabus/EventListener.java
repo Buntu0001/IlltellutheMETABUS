@@ -11,9 +11,7 @@ public class EventListener implements Listener {
     public void onPlayerClickInventory(InventoryClickEvent inventoryClickEvent) {
         Player player = (Player) inventoryClickEvent.getWhoClicked();
         String inventoryTitle = inventoryClickEvent.getView().getTitle();
-        ChatColor.stripColor(inventoryTitle);
-        player.sendMessage(inventoryTitle);
-        if (QuestionList.containsQuestion(inventoryTitle)) {
+        if (QuestionList.containsQuestionByInventoryTitle(inventoryTitle)) {
             inventoryClickEvent.setCancelled(true);
         }
     }

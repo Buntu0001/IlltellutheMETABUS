@@ -56,33 +56,33 @@ public class YamlController {
                 ex.printStackTrace();
             }
         } else {
-            try {
-                for (String node : questionYmlFile.getConfigurationSection("question").getKeys(false)) {
-                    String questionTitle = String.valueOf(node);
-                    String questionContext = String.valueOf(questionYmlFile.get("question." + node + ".문제내용"));
-                    ArrayList<String> questionContextLores = new ArrayList<>(questionYmlFile.getStringList("question." + node + ".문제상세내용"));
-
-                    ArrayList<String> questionOptions = new ArrayList<>();
-                    for (int i = 1; i <= 5; i++) {
-                        questionOptions.add(String.valueOf(questionYmlFile.get("question." + node + String.format(".선택지.%d번", i))));
-                    }
-                    int questionAnswer = (int) questionYmlFile.get("question." + node + ".정답");
-                    int questionScore = (int) questionYmlFile.get("question." + node + ".점수");
-                    int questionLimitTime = (int) questionYmlFile.get("question." + node + ".제한시간");
-
-                    Question question = new Question(questionTitle, questionContext, questionContextLores, questionOptions, questionAnswer, questionScore, questionLimitTime);
-                    QuestionList.putQuestion(question);
-                    System.out.println(String.format("%s 문제가 등록되었습니다.", questionTitle));
-                }
-            } catch (Exception ex) {
-                System.out.println("question.yml 파일의 형식이 잘못되었습니다.");
-                System.out.println("파일을 백업한 후, 서버를 재부팅하여 예시 파일 형식을 참조해주세요.");
-                ex.printStackTrace();
-            }
+            yamlRetrieveData();
         }
     }
 
-    public void yamlReload() {
+    public void yamlRetrieveData() {
+        try {
+            for (String node : questionYmlFile.getConfigurationSection("question").getKeys(false)) {
+                String questionTitle = String.valueOf(node);
+                String questionContext = String.valueOf(questionYmlFile.get("question." + node + ".문제내용"));
+                ArrayList<String> questionContextLores = new ArrayList<>(questionYmlFile.getStringList("question." + node + ".문제상세내용"));
 
+                ArrayList<String> questionOptions = new ArrayList<>();
+                for (int i = 1; i <= 5; i++) {
+                    questionOptions.add(String.valueOf(questionYmlFile.get("question." + node + String.format(".선택지.%d번", i))));
+                }
+                int questionAnswer = (int) questionYmlFile.get("question." + node + ".정답");
+                int questionScore = (int) questionYmlFile.get("question." + node + ".점수");
+                int questionLimitTime = (int) questionYmlFile.get("question." + node + ".제한시간");
+
+                Question question = new Question(questionTitle, questionContext, questionContextLores, questionOptions, questionAnswer, questionScore, questionLimitTime);
+                QuestionList.putQuestion(question);
+                System.out.println(String.format("%s 문제가 등록되었습니다.", questionTitle));
+            }
+        } catch (Exception ex) {
+            System.out.println("question.yml 파일의 형식이 잘못되었습니다.");
+            System.out.println("파일을 백업한 후, 서버를 재부팅하여 예시 파일 형식을 참조해주세요.");
+            ex.printStackTrace();
+        }
     }
 }
