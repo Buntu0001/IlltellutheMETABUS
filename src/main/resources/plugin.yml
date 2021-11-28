@@ -1,0 +1,7 @@
+name: IlltellutheMETABUS
+version: '${project.version}'
+main: com.buntu.illtelluthemetabus.Main
+commands:
+  문제:
+    description: question.yml 로부터 문제를 받아옵니다.
+    usage: /문제 [문제이름]
