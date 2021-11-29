@@ -31,54 +31,17 @@ public class Util {
         return input == null ? null : STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
     }
 
+    public static Object[] secondsToMinutes(Integer seconds) {
+        Integer buffer = seconds;
+        if (buffer >= 60) {
+            Integer minutes = buffer / 60;
+            buffer -= minutes * 60;
+            return new Object[]{minutes, buffer};
+        } else {
+            return new Object[]{0, buffer};
+        }
+    }
+
     public static Plugin plugin;
     public static YamlController yamlController;
-
-    public static void openQuestionGui(Player player, Question question) {
-        Inventory inventory = Bukkit.createInventory(null, 9 * 3, Util.translate("&e" + question.getQuestionTitle()));
-
-        ItemStack questionBook = new ItemStack(Material.ENCHANTED_BOOK); // slot 4
-        ItemMeta questionBookMeta = questionBook.getItemMeta();
-        questionBookMeta.setDisplayName(Util.translate(question.getQuestionContext()));
-        questionBookMeta.setLore(Util.translate(question.getQuestionContextLores()));
-        questionBook.setItemMeta(questionBookMeta);
-
-        // slot 11 ~ 15
-
-        ItemStack questionFirstOptions = new ItemStack(4870, 1, (short) 8);
-        ItemMeta questionFirstOptionsMeta = questionFirstOptions.getItemMeta();
-        questionFirstOptionsMeta.setDisplayName(Util.translate(question.getQuestionOptions().get(0)));
-        questionFirstOptions.setItemMeta(questionFirstOptionsMeta);
-
-        ItemStack questionSecondOptions = new ItemStack(4871, 1, (short) 0);
-        ItemMeta questionSecondOptionsMeta = questionSecondOptions.getItemMeta();
-        questionSecondOptionsMeta.setDisplayName(Util.translate(question.getQuestionOptions().get(1)));
-        questionSecondOptions.setItemMeta(questionSecondOptionsMeta);
-
-        ItemStack questionThirdOptions = new ItemStack(4871, 1, (short) 8);
-        ItemMeta questionThirdOptionsMeta = questionThirdOptions.getItemMeta();
-        questionThirdOptionsMeta.setDisplayName(Util.translate(question.getQuestionOptions().get(2)));
-        questionThirdOptions.setItemMeta(questionThirdOptionsMeta);
-
-        ItemStack questionFourthOptions = new ItemStack(4872, 1, (short) 0);
-        ItemMeta questionFourthOptionsMeta = questionFourthOptions.getItemMeta();
-        questionFourthOptionsMeta.setDisplayName(Util.translate(question.getQuestionOptions().get(3)));
-        questionFourthOptions.setItemMeta(questionFourthOptionsMeta);
-
-        ItemStack questionFifthOptions = new ItemStack(4872, 1, (short) 8);
-        ItemMeta questionFifthOptionsMeta = questionFifthOptions.getItemMeta();
-        questionFifthOptionsMeta.setDisplayName(Util.translate(question.getQuestionOptions().get(4)));
-        questionFifthOptions.setItemMeta(questionFifthOptionsMeta);
-
-        inventory.setItem(4, questionBook);
-        inventory.setItem(11, questionFirstOptions);
-        inventory.setItem(12, questionSecondOptions);
-        inventory.setItem(13, questionThirdOptions);
-        inventory.setItem(14, questionFourthOptions);
-        inventory.setItem(15, questionFifthOptions);
-
-        player.openInventory(inventory);
-
-
-    }
 }

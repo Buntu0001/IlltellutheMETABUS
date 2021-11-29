@@ -30,6 +30,7 @@ public class YamlController {
             questionYmlFile.set("question.기본문제.선택지.3번", "&f나뭇잎마을");
             questionYmlFile.set("question.기본문제.선택지.4번", "&f장수말벌");
             questionYmlFile.set("question.기본문제.선택지.5번", "&f양봉규");
+            questionYmlFile.set("question.기본문제.난이도", "&a하");
             questionYmlFile.set("question.기본문제.정답", 5);
             questionYmlFile.set("question.기본문제.점수", 523);
             questionYmlFile.set("question.기본문제.제한시간", 523);
@@ -44,6 +45,7 @@ public class YamlController {
             questionYmlFile.set("question.심화문제.선택지.3번", "&fhitomi.la");
             questionYmlFile.set("question.심화문제.선택지.4번", "&fmc.aicoding.kro.kr");
             questionYmlFile.set("question.심화문제.선택지.5번", "&fexploit.in");
+            questionYmlFile.set("question.심화문제.난이도", "&6중");
             questionYmlFile.set("question.심화문제.정답", 4);
             questionYmlFile.set("question.심화문제.점수", 123);
             questionYmlFile.set("question.심화문제.제한시간", 123);
@@ -62,6 +64,8 @@ public class YamlController {
 
     public void yamlRetrieveData() {
         try {
+            QuestionList.clearQuestion();
+
             for (String node : questionYmlFile.getConfigurationSection("question").getKeys(false)) {
                 String questionTitle = String.valueOf(node);
                 String questionContext = String.valueOf(questionYmlFile.get("question." + node + ".문제내용"));
@@ -71,11 +75,13 @@ public class YamlController {
                 for (int i = 1; i <= 5; i++) {
                     questionOptions.add(String.valueOf(questionYmlFile.get("question." + node + String.format(".선택지.%d번", i))));
                 }
+
+                String difficulty = String.valueOf(questionYmlFile.get("question." + node + ".난이도"));
                 int questionAnswer = (int) questionYmlFile.get("question." + node + ".정답");
                 int questionScore = (int) questionYmlFile.get("question." + node + ".점수");
                 int questionLimitTime = (int) questionYmlFile.get("question." + node + ".제한시간");
 
-                Question question = new Question(questionTitle, questionContext, questionContextLores, questionOptions, questionAnswer, questionScore, questionLimitTime);
+                Question question = new Question(questionTitle, questionContext, questionContextLores, questionOptions, difficulty, questionAnswer, questionScore, questionLimitTime);
                 QuestionList.putQuestion(question);
                 System.out.println(String.format("%s 문제가 등록되었습니다.", questionTitle));
             }
