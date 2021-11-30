@@ -4,10 +4,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class CommandListener implements CommandExecutor {
     @Override
@@ -17,7 +13,7 @@ public class CommandListener implements CommandExecutor {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("리로드")) {
                     player.sendMessage(Util.translate("&6[문제] &fquestion.yml 파일을 리로드합니다."));
-                    Util.yamlController.yamlRetrieveData();
+                    Util.yamlManager.yamlRetrieveData();
                     return true;
                 } else {
                     String questionTitle = args[0];

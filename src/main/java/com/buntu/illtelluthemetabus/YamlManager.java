@@ -6,11 +6,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YamlController {
+public class YamlManager {
     private File questionFile;
     private YamlConfiguration questionYmlFile;
 
-    public YamlController(File file) {
+    public YamlManager(File file) {
         this.questionFile = file;
         questionYmlFile = YamlConfiguration.loadConfiguration(questionFile);
         yamlInitialize();

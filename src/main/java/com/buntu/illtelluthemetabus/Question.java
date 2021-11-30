@@ -177,6 +177,9 @@ class QuestionRanking {
 
     }
 }
+class QuestionRankingList {
+    private static ArrayList<QuestionRanking> questionRankingList = new ArrayList<>();
+}
 
 class QuestionMisc {
     public static void openQuestionGui(Player player, Question question) {
@@ -205,19 +208,35 @@ class QuestionMisc {
         questionPlayerState.setTimerTaskId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
             @Override
             public void run() {
-                Object[] timerFormatted = Util.secondsToMinutes(questionPlayerState.getTimer());
-                player.sendMessage(String.format("%s분 %s초 남음", String.valueOf(timerFormatted[0]), String.valueOf(timerFormatted[1])));
-                questionPlayerState.setTimer(questionPlayerState.getTimer() - 1);
+                //Object[] timerFormatted = Util.secondsToMinutes(questionPlayerState.getTimer());
+                //player.sendMessage(String.format("%s분 %s초 남음", String.valueOf(timerFormatted[0]), String.valueOf(timerFormatted[1])));
+                if (questionPlayerState.getSolvingQuestionState()) {
+                    makeQuestionGui(player, question, Util.secondsToMinutes(questionPlayerState.getTimer()));
+                    questionPlayerState.setTimer(questionPlayerState.getTimer() - 1);
+                }
             }
         }, 0, 20L));
 
         QuestionPlayerStateList.putQuestionPlayerState(questionPlayerState);
 
-        makeQuestionGui(player, question);
+        //makeQuestionGui(player, question);
     }
 
-    public static void makeQuestionGui(Player player, Question question) {
-        Inventory inventory = Bukkit.createInventory(null, 9 * 3, Util.translate("&e" + question.getQuestionTitle()));
+    public static void completeQuestion(QuestionPlayerState questionPlayerState) {
+        questionPlayerState.setSolvingQuestionState(false);
+        Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
+        questionPlayerState.setTimer(0);
+        questionPlayerState.setTimerTaskId(0);
+        questionPlayerState.setPlayerScore(questionPlayerState.getPlayerScore() + questionPlayerState.getAllocatedQuestion().getQuestionScore());
+        questionPlayerState.setAllocatedQuestion(null);
+    }
+
+    public static Boolean checkQuestionAnswer(QuestionPlayerState questionPlayerState, Integer answerNumber) {
+        return questionPlayerState.getAllocatedQuestion().getQuestionAnswer() == answerNumber;
+    }
+
+    public static void makeQuestionGui(Player player, Question question, Object[] remainingTime) {
+        Inventory inventory = Bukkit.createInventory(null, 9 * 3, Util.translate("&e" + question.getQuestionTitle() + String.format(" - %s:%s", remainingTime[0], remainingTime[1])));
 
         ItemStack questionBook = new ItemStack(Material.ENCHANTED_BOOK); // slot 4
         ItemMeta questionBookMeta = questionBook.getItemMeta();

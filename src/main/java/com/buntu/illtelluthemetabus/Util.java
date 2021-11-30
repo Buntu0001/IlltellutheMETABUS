@@ -1,12 +1,6 @@
 package com.buntu.illtelluthemetabus;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
@@ -33,15 +27,24 @@ public class Util {
 
     public static Object[] secondsToMinutes(Integer seconds) {
         Integer buffer = seconds;
+        String bufferString;
         if (buffer >= 60) {
             Integer minutes = buffer / 60;
             buffer -= minutes * 60;
-            return new Object[]{minutes, buffer};
+            bufferString = String.valueOf(seconds);
+            if (bufferString.length() == 1) {
+                bufferString = "0" + bufferString;
+            }
+            return new Object[]{minutes, bufferString};
         } else {
-            return new Object[]{0, buffer};
+            bufferString = String.valueOf(seconds);
+            if (bufferString.length() == 1) {
+                 bufferString = "0" + bufferString;
+            }
+            return new Object[]{0, bufferString};
         }
     }
 
     public static Plugin plugin;
-    public static YamlController yamlController;
+    public static YamlManager yamlManager;
 }
