@@ -16,6 +16,8 @@ public class EventListener implements Listener {
         String inventoryTitle = inventoryClickEvent.getView().getTitle();
         if (QuestionList.containsQuestion(inventoryTitle)) {
             inventoryClickEvent.setCancelled(true);
+            player.sendMessage("HI!!!!!");
+            //Check Answer
         }
     }
 

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Util {
+    public static String inventoryTitleSplitter = "                  ";
+
     public static String translate(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
@@ -31,13 +33,13 @@ public class Util {
         if (buffer >= 60) {
             Integer minutes = buffer / 60;
             buffer -= minutes * 60;
-            bufferString = String.valueOf(seconds);
+            bufferString = String.valueOf(buffer);
             if (bufferString.length() == 1) {
                 bufferString = "0" + bufferString;
             }
             return new Object[]{minutes, bufferString};
         } else {
-            bufferString = String.valueOf(seconds);
+            bufferString = String.valueOf(buffer);
             if (bufferString.length() == 1) {
                  bufferString = "0" + bufferString;
             }

@@ -57,17 +57,15 @@ public class CommandListener implements CommandExecutor {
                             Question question;
                             question = QuestionList.getQuestion(questionTitle);
                             QuestionMisc.openQuestionGui(player, question);
-                            return true;
                         } else {
                             player.sendMessage("&6[문제] &feeeeeeee이미 문제가 진행 중입니다!");
-                            return true;
                         }
                     } else {
                         Question question;
                         question = QuestionList.getQuestion(questionTitle);
                         QuestionMisc.openQuestionGui(player, question);
-                        return true;
                     }
+                    return true;
                 } catch (Exception ex) {
                     player.sendMessage(Util.translate("&c[오류] &f알 수 없는 문제 이름입니다."));
                     return true;
