@@ -1,9 +1,11 @@
 package com.buntu.illtelluthemetabus;
 
 import org.bukkit.ChatColor;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Util {
@@ -45,6 +47,10 @@ public class Util {
             }
             return new Object[]{0, bufferString};
         }
+    }
+
+    public static Integer determineAnswerNumber(Integer clickedInventorySlot) {
+        return clickedInventorySlot - 10;
     }
 
     public static Plugin plugin;

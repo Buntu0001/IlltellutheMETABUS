@@ -14,7 +14,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class QuestionMisc {
     public static void openQuestionGui(Player player, Question question) {
-        QuestionPlayerState questionPlayerState = new QuestionPlayerState(player);
+        QuestionPlayerState questionPlayerState;
+        if (QuestionPlayerStateList.containsQuestionPlayerState(player)) {
+            questionPlayerState = QuestionPlayerStateList.getQuestionPlayerState(player);
+        } else {
+            questionPlayerState = new QuestionPlayerState(player);
+        }
         questionPlayerState.setAllocatedQuestion(question);
         questionPlayerState.setSolvingQuestionState(true);
         questionPlayerState.setTimer(question.getQuestionLimitTime());
@@ -50,6 +55,7 @@ public class QuestionMisc {
         }, 0, 20L));
 
         QuestionPlayerStateList.putQuestionPlayerState(questionPlayerState);
+
     }
 
     public static void completeQuestion(QuestionPlayerState questionPlayerState) {
@@ -58,6 +64,18 @@ public class QuestionMisc {
         questionPlayerState.setTimer(0);
         questionPlayerState.setTimerTaskId(0);
         questionPlayerState.setPlayerScore(questionPlayerState.getPlayerScore() + questionPlayerState.getAllocatedQuestion().getQuestionScore());
+        questionPlayerState.setAllocatedQuestion(null);
+        String inventoryTitle = questionPlayerState.getPlayer().getOpenInventory().getTitle();
+        if (QuestionList.containsQuestion(inventoryTitle)) {
+            questionPlayerState.getPlayer().closeInventory();
+        }
+    }
+
+    public static void interruptQuestion(QuestionPlayerState questionPlayerState) {
+        questionPlayerState.setSolvingQuestionState(false);
+        Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
+        questionPlayerState.setTimer(0);
+        questionPlayerState.setTimerTaskId(0);
         questionPlayerState.setAllocatedQuestion(null);
     }
 
@@ -70,9 +88,6 @@ public class QuestionMisc {
         entityPlayer.updateInventory(entityPlayer.activeContainer);
     }
 
-    public static Boolean checkQuestionAnswer(QuestionPlayerState questionPlayerState, Integer answerNumber) {
-        return questionPlayerState.getAllocatedQuestion().getQuestionAnswer() == answerNumber;
-    }
 
     public static void makeQuestionGui(Player player, Question question, String inventoryTitle) {
         Inventory inventory = Bukkit.createInventory(null, 9 * 3, Util.translate("&0" + inventoryTitle));

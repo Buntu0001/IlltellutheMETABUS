@@ -5,46 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32be03e2-1ea3-4287-9eb7-31913935fa86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_1_12_2_R0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/QuestionList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/QuestionMisc.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/QuestionPlayerState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/QuestionPlayerStateList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/QuestionRanking.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/QuestionRankingList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_21_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_json_simple_json_simple_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_12_SNAPSHOT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_12_2_R0_1_SNAPSHOT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_19.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IlltellutheMETABUS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IlltellutheMETABUS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/CommandListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/CommandListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/EventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/EventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/Question.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/QuestionMisc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/QuestionMisc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/ScoreBoardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/ScoreBoardManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/buntu/illtelluthemetabus/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/IlltellutheMETABUS-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/IlltellutheMETABUS-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/CommandListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/CommandListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/IlltellutheMETABUS-1.0-SNAPSHOT.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/EventListener$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/EventListener$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/EventListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/EventListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/Question.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/Question.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionList.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionMisc$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionMisc$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionMisc$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionMisc$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionMisc.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionMisc.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionPlayerState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionPlayerState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionPlayerStateList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionPlayerStateList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionRanking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionRanking.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionRankingList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/QuestionRankingList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/ScoreBoardManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/ScoreBoardManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/Util.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/buntu/illtelluthemetabus/Util.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/original-IlltellutheMETABUS-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-IlltellutheMETABUS-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,6 +39,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -86,7 +67,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
+    <property name="settings.editor.selected.configurable" value="discord-application" />
   </component>
   <component name="RunManager">
     <configuration name="IlltellutheMETABUS build" type="MavenRunConfiguration" factoryName="Maven">
@@ -104,6 +85,7 @@
             <option name="printErrorStackTraces" value="false" />
             <option name="showDialogWithAdvancedSettings" value="false" />
             <option name="threads" />
+            <option name="useMavenConfig" value="false" />
             <option name="usePluginRegistry" value="false" />
             <option name="userSettingsFile" value="" />
             <option name="workOffline" value="false" />
@@ -167,6 +149,16 @@
       <workItem from="1638262900824" duration="480000" />
       <workItem from="1638283619727" duration="6827000" />
       <workItem from="1638290557409" duration="2001000" />
+      <workItem from="1638328502598" duration="5218000" />
+      <workItem from="1638336018560" duration="49000" />
+      <workItem from="1638336078811" duration="665000" />
+      <workItem from="1638337377701" duration="113000" />
+      <workItem from="1638337503363" duration="29000" />
+      <workItem from="1638337551991" duration="32000" />
+      <workItem from="1638337622957" duration="36000" />
+      <workItem from="1638337675583" duration="108000" />
+      <workItem from="1638337827118" duration="2124000" />
+      <workItem from="1638350742514" duration="83000" />
     </task>
     <servers />
   </component>
@@ -183,6 +175,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
