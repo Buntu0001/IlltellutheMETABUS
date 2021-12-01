@@ -53,6 +53,8 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
+        QuestionPlayerState questionPlayerState = new QuestionPlayerState(playerJoinEvent.getPlayer());
+        QuestionPlayerStateList.putQuestionPlayerState(questionPlayerState);
         ScoreBoardManager.initializeScoreBoard();
     }
 

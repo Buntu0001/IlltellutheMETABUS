@@ -14,12 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class QuestionMisc {
     public static void openQuestionGui(Player player, Question question) {
-        QuestionPlayerState questionPlayerState;
-        if (QuestionPlayerStateList.containsQuestionPlayerState(player)) {
-            questionPlayerState = QuestionPlayerStateList.getQuestionPlayerState(player);
-        } else {
-            questionPlayerState = new QuestionPlayerState(player);
-        }
+        QuestionPlayerState questionPlayerState = QuestionPlayerStateList.getQuestionPlayerState(player);
         questionPlayerState.setAllocatedQuestion(question);
         questionPlayerState.setSolvingQuestionState(true);
         questionPlayerState.setTimer(question.getQuestionLimitTime());
@@ -77,6 +72,8 @@ public class QuestionMisc {
         questionPlayerState.setTimer(0);
         questionPlayerState.setTimerTaskId(0);
         questionPlayerState.setAllocatedQuestion(null);
+
+        QuestionPlayerStateList.removeQuestionPlayerState(questionPlayerState.getPlayer());
     }
 
     public static void updateInventoryTitle(Player player, Question question, Object[] remainingTime) {

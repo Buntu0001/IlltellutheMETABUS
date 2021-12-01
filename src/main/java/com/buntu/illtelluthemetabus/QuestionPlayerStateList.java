@@ -18,4 +18,8 @@ public class QuestionPlayerStateList {
     public static Boolean containsQuestionPlayerState(Player player) {
         return questionPlayerStateMap.containsKey(player);
     }
+
+    public static void removeQuestionPlayerState(Player player) {
+        questionPlayerStateMap.remove(player);
+    }
 }

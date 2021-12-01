@@ -53,6 +53,21 @@ public class Util {
         return clickedInventorySlot - 10;
     }
 
+    public static ArrayList<QuestionPlayerState> sortRanking(ArrayList<QuestionPlayerState> unsortRanking) {
+        ArrayList<QuestionPlayerState> sortRank = new ArrayList<>(unsortRanking);
+        Integer size = sortRank.size();
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                if (sortRank.get(i).getPlayerScore() > sortRank.get(j).getPlayerScore()) {
+                    QuestionPlayerState tempQuestionPlayerState = sortRank.get(i);
+                    sortRank.set(i, sortRank.get(j));
+                    sortRank.set(j, tempQuestionPlayerState);
+                }
+            }
+        }
+        return sortRank;
+    }
+
     public static Plugin plugin;
     public static YamlManager yamlManager;
 }
