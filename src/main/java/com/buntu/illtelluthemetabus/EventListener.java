@@ -55,7 +55,7 @@ public class EventListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
         QuestionPlayerState questionPlayerState = new QuestionPlayerState(playerJoinEvent.getPlayer());
         QuestionPlayerStateList.putQuestionPlayerState(questionPlayerState);
-        ScoreBoardManager.initializeScoreBoard();
+        ScoreBoardManager.updateScoreBoard();
     }
 
     @EventHandler
@@ -64,6 +64,8 @@ public class EventListener implements Listener {
         if (QuestionPlayerStateList.containsQuestionPlayerState(player)) {
             if (QuestionPlayerStateList.getQuestionPlayerState(player).getSolvingQuestionState()) {
                 QuestionMisc.interruptQuestion(QuestionPlayerStateList.getQuestionPlayerState(player));
+                QuestionPlayerStateList.removeQuestionPlayerState(player);
+                ScoreBoardManager.updateScoreBoard();
             }
         }
     }

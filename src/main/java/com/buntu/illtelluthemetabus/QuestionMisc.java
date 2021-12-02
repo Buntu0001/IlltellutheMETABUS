@@ -72,8 +72,6 @@ public class QuestionMisc {
         questionPlayerState.setTimer(0);
         questionPlayerState.setTimerTaskId(0);
         questionPlayerState.setAllocatedQuestion(null);
-
-        QuestionPlayerStateList.removeQuestionPlayerState(questionPlayerState.getPlayer());
     }
 
     public static void updateInventoryTitle(Player player, Question question, Object[] remainingTime) {

@@ -7,10 +7,6 @@ import org.bukkit.scoreboard.*;
 import java.util.ArrayList;
 
 public class ScoreBoardManager {
-    public static void initializeScoreBoard() {
-        updateScoreBoard();
-    }
-
     public static void updateScoreBoard() {
         ScoreboardManager scoreBoardManager = Bukkit.getScoreboardManager();
         Scoreboard scoreboard = scoreBoardManager.getNewScoreboard();
