@@ -20,9 +20,14 @@ public class ScoreBoardManager {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         Integer multipleLineScore = 0;
-        multipleLineScore = Bukkit.getOnlinePlayers().size() - 1;
+        ArrayList<QuestionPlayerState> sortList = new ArrayList<>();
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            QuestionPlayerState questionPlayerState = QuestionPlayerStateList.getQuestionPlayerState(onlinePlayer);
+            sortList.add(QuestionPlayerStateList.getQuestionPlayerState(onlinePlayer));
+        }
+        sortList = Util.sortRanking(sortList);
+
+        for (int i = 0; i < sortList.size(); i++) {
+            QuestionPlayerState questionPlayerState = sortList.get(i);
             Score score = objective.getScore(Util.translate(String.format("&7%s: &6%d&7점", questionPlayerState.getPlayer().getDisplayName(), questionPlayerState.getPlayerScore())));
             score.setScore(multipleLineScore--);
         }
