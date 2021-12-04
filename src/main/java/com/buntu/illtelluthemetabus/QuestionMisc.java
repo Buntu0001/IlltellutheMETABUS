@@ -19,7 +19,14 @@ public class QuestionMisc {
         questionPlayerState.setSolvingQuestionState(true);
         questionPlayerState.setTimer(question.getQuestionLimitTime());
 
-        makeQuestionGui(player, question, question.getQuestionTitle());
+        makeQuestionGui(player, question);
+
+        questionPlayerState.setUpdateTaskId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
+            @Override
+            public void run() {
+                updateInventoryTitle(player, question, Util.secondsToMinutes(questionPlayerState.getTimer()));
+            }
+        }, 0, 5L));
 
         questionPlayerState.setTimerTaskId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
             @Override
@@ -28,16 +35,17 @@ public class QuestionMisc {
                     if (questionPlayerState.getTimer() < 0) {
                         questionPlayerState.setSolvingQuestionState(false);
                         Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
+                        Bukkit.getScheduler().cancelTask(questionPlayerState.getUpdateTaskId());
                         questionPlayerState.setTimer(0);
                         questionPlayerState.setTimerTaskId(0);
+                        questionPlayerState.setUpdateTaskId(0);
                         questionPlayerState.setAllocatedQuestion(null);
                         String inventoryTitle = player.getOpenInventory().getTitle();
                         if (QuestionList.containsQuestion(inventoryTitle)) {
                             player.closeInventory();
                         }
-                        player.sendMessage("The END!");
+                        player.sendMessage(Util.translate("&c시간 초과!"));
                     } else {
-                        updateInventoryTitle(player, question, Util.secondsToMinutes(questionPlayerState.getTimer()));
                         questionPlayerState.setTimer(questionPlayerState.getTimer() - 1);
                     }
                 }
@@ -51,10 +59,13 @@ public class QuestionMisc {
     public static void completeQuestion(QuestionPlayerState questionPlayerState) {
         questionPlayerState.setSolvingQuestionState(false);
         Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
+        Bukkit.getScheduler().cancelTask(questionPlayerState.getUpdateTaskId());
         questionPlayerState.setTimer(0);
         questionPlayerState.setTimerTaskId(0);
+        questionPlayerState.setUpdateTaskId(0);
         questionPlayerState.setPlayerScore(questionPlayerState.getPlayerScore() + questionPlayerState.getAllocatedQuestion().getQuestionScore());
         questionPlayerState.setAllocatedQuestion(null);
+        questionPlayerState.setGlassPaneColorState(0);
         String inventoryTitle = questionPlayerState.getPlayer().getOpenInventory().getTitle();
         if (QuestionList.containsQuestion(inventoryTitle)) {
             questionPlayerState.getPlayer().closeInventory();
@@ -65,23 +76,32 @@ public class QuestionMisc {
     public static void interruptQuestion(QuestionPlayerState questionPlayerState) {
         questionPlayerState.setSolvingQuestionState(false);
         Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
+        Bukkit.getScheduler().cancelTask(questionPlayerState.getUpdateTaskId());
         questionPlayerState.setTimer(0);
         questionPlayerState.setTimerTaskId(0);
+        questionPlayerState.setUpdateTaskId(0);
         questionPlayerState.setAllocatedQuestion(null);
     }
 
     public static void updateInventoryTitle(Player player, Question question, Object[] remainingTime) {
-        EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-        PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(entityPlayer.activeContainer.windowId,
-                "minecraft:chest", new ChatMessage(ChatColor.translateAlternateColorCodes('&', Util.translate("&0" + question.getQuestionTitle() + String.format("&0" + Util.inventoryTitleSplitter + "남은시간: %s:%s", remainingTime[0], remainingTime[1])))),
-                player.getOpenInventory().getTopInventory().getSize());
-        entityPlayer.playerConnection.sendPacket(packet);
-        entityPlayer.updateInventory(entityPlayer.activeContainer);
+        if (QuestionPlayerStateList.containsQuestionPlayerState(player)) {
+            QuestionPlayerState questionPlayerState = QuestionPlayerStateList.getQuestionPlayerState(player);
+            if (questionPlayerState.getSolvingQuestionState()) {
+                if (questionPlayerState.getTimer() >= 0) {
+                    EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+                    PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(entityPlayer.activeContainer.windowId,
+                            "minecraft:chest", new ChatMessage(ChatColor.translateAlternateColorCodes('&', Util.translate("&0" + question.getQuestionTitle() + String.format("&0" + Util.inventoryTitleSplitter + "남은시간: %s:%s", remainingTime[0], remainingTime[1])))),
+                            player.getOpenInventory().getTopInventory().getSize());
+                    entityPlayer.playerConnection.sendPacket(packet);
+                    entityPlayer.updateInventory(entityPlayer.activeContainer);
+                }
+            }
+        }
     }
 
 
-    public static void makeQuestionGui(Player player, Question question, String inventoryTitle) {
-        Inventory inventory = Bukkit.createInventory(null, 9 * 3, Util.translate("&0" + inventoryTitle));
+    public static void makeQuestionGui(Player player, Question question) {
+        Inventory inventory = Bukkit.createInventory(null, 9 * 3, Util.translate("&0" + question.getQuestionTitle()));
 
         ItemStack questionBook = new ItemStack(Material.ENCHANTED_BOOK); // slot 4
         ItemMeta questionBookMeta = questionBook.getItemMeta();
@@ -122,6 +142,20 @@ public class QuestionMisc {
         inventory.setItem(13, questionThirdOptions);
         inventory.setItem(14, questionFourthOptions);
         inventory.setItem(15, questionFifthOptions);
+
+        Integer colorCode = QuestionPlayerStateList.getQuestionPlayerState(player).getGlassPaneColorState();
+        ItemStack glassPane = Util.getGlassPane(colorCode);
+        inventory.setItem(0, glassPane);
+        inventory.setItem(1, glassPane);
+        inventory.setItem(2, glassPane);
+        inventory.setItem(6, glassPane);
+        inventory.setItem(7, glassPane);
+        inventory.setItem(8, glassPane);
+        inventory.setItem(9, glassPane);
+        inventory.setItem(17, glassPane);
+        for (int i = 18; i <= 26; i++) {
+            inventory.setItem(i, glassPane);
+        }
 
         player.openInventory(inventory);
     }

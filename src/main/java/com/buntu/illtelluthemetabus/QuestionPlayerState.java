@@ -10,6 +10,8 @@ class QuestionPlayerState {
     private Integer score = 0;
     private Integer timer = 0;
     private Integer timerTaskId = 0;
+    private Integer updateTaskId = 0;
+    private Integer glassPaneColorState = 0;
 
     public QuestionPlayerState(Player player) {
         this.player = player;
@@ -39,6 +41,12 @@ class QuestionPlayerState {
         this.timerTaskId = taskId;
     }
 
+    public void setUpdateTaskId(Integer taskId) {
+        this.updateTaskId = taskId;
+    }
+
+    public void setGlassPaneColorState(Integer colorCode) { this.glassPaneColorState = colorCode; }
+
     public Boolean getSolvingQuestionState() {
         return solvingQuestionState;
     }
@@ -57,5 +65,13 @@ class QuestionPlayerState {
 
     public Integer getTimerTaskId() {
         return this.timerTaskId;
+    }
+
+    public Integer getUpdateTaskId() {
+        return this.updateTaskId;
+    }
+
+    public Integer getGlassPaneColorState() {
+        return this.glassPaneColorState;
     }
 }

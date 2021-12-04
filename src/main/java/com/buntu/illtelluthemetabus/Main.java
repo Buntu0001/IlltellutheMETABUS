@@ -16,6 +16,7 @@ public final class Main extends JavaPlugin {
         Util.plugin = this;
         checkPluginFolderExist();
         Util.yamlManager = new YamlManager(new File(pluginFolder + "\\question.yml"));
+        Util.initaillizeGlassPane();
 
         ScoreBoardManager.setScoreBoardTitle("획득 점수");
         ScoreBoardManager.repeatUpdateScoreBoard();

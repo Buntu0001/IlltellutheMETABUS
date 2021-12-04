@@ -33,10 +33,28 @@ public class EventListener implements Listener {
                         if (inventoryClickEvent.getCurrentItem().getType() != Material.AIR) {
                             if (StringUtils.isNotEmpty(inventoryClickEvent.getCurrentItem().getItemMeta().getDisplayName())) {
                                 if (questionPlayerState.getAllocatedQuestion().getQuestionAnswer() == answerNumber) {
-                                    player.sendMessage("정답!");
-                                    QuestionMisc.completeQuestion(questionPlayerState);
+                                    if (questionPlayerState.getGlassPaneColorState() == 0) {
+                                        questionPlayerState.setGlassPaneColorState(5);
+                                        player.getOpenInventory().close();
+                                        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                QuestionMisc.completeQuestion(questionPlayerState);
+                                            }
+                                        }, 20L * 2);
+                                    }
                                 } else {
-                                    player.sendMessage("오답!");
+                                    if (questionPlayerState.getGlassPaneColorState() == 0) {
+                                        questionPlayerState.setGlassPaneColorState(14);
+                                        player.getOpenInventory().close();
+                                        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                questionPlayerState.setGlassPaneColorState(0);
+                                                player.getOpenInventory().close();
+                                            }
+                                        }, 20L * 2);
+                                    }
                                 }
                             }
                         }
@@ -57,7 +75,7 @@ public class EventListener implements Listener {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            player.openInventory(inventoryCloseEvent.getInventory());
+                            QuestionMisc.makeQuestionGui(player, questionPlayerState.getAllocatedQuestion());
                         }
                     }, 1L);
                 }

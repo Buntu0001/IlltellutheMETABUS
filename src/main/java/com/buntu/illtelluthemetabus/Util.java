@@ -2,7 +2,9 @@ package com.buntu.illtelluthemetabus;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
@@ -99,6 +101,37 @@ public class Util {
             stringBuilder.insert(index * 3, " ");
         }
         return stringBuilder.toString();
+    }
+
+    private static ItemStack normalGlassPane = new ItemStack(160, 1, (short) 0);
+    private static ItemStack correctGlassPane = new ItemStack(160, 1, (short) 5);
+    private static ItemStack wrongGlassPane = new ItemStack(160, 1, (short) 14);
+
+    public static void initaillizeGlassPane() {
+        ItemMeta normalGlassPaneMeta = normalGlassPane.getItemMeta();
+        ItemMeta correctGlassPaneMeta = correctGlassPane.getItemMeta();
+        ItemMeta wrongGlassPaneMeta = wrongGlassPane.getItemMeta();
+
+        normalGlassPaneMeta.setDisplayName(Util.translate("&a잘 생각 해보면 답이 생각날지도?"));
+        correctGlassPaneMeta.setDisplayName(Util.translate("&a정답입니다!"));
+        wrongGlassPaneMeta.setDisplayName(Util.translate("&c다시 한번 생각해 봐요!"));
+
+        normalGlassPane.setItemMeta(normalGlassPaneMeta);
+        correctGlassPane.setItemMeta(correctGlassPaneMeta);
+        wrongGlassPane.setItemMeta(wrongGlassPaneMeta);
+    }
+
+    public static ItemStack getGlassPane(Integer dataType) {
+        switch (dataType) {
+            case 0:
+                return normalGlassPane;
+            case 5:
+                return correctGlassPane;
+            case 14:
+                return wrongGlassPane;
+            default:
+                return new ItemStack(160, 1, (short) 0);
+        }
     }
 
     public static Plugin plugin;
