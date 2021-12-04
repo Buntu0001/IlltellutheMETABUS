@@ -21,30 +21,25 @@ public class QuestionMisc {
 
         makeQuestionGui(player, question, question.getQuestionTitle());
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
-            @Override
-            public void run() {
-                if (questionPlayerState.getSolvingQuestionState()) {
-                    questionPlayerState.setSolvingQuestionState(false);
-                    Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
-                    questionPlayerState.setTimer(0);
-                    questionPlayerState.setTimerTaskId(0);
-                    questionPlayerState.setAllocatedQuestion(null);
-                    String inventoryTitle = player.getOpenInventory().getTitle();
-                    if (QuestionList.containsQuestion(inventoryTitle)) {
-                        player.closeInventory();
-                    }
-                    player.sendMessage("The END!");
-                }
-            }
-        }, 20L * (questionPlayerState.getTimer() + 1));
-
         questionPlayerState.setTimerTaskId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
             @Override
             public void run() {
                 if (questionPlayerState.getSolvingQuestionState()) {
-                    updateInventoryTitle(player, question, Util.secondsToMinutes(questionPlayerState.getTimer()));
-                    questionPlayerState.setTimer(questionPlayerState.getTimer() - 1);
+                    if (questionPlayerState.getTimer() < 0) {
+                        questionPlayerState.setSolvingQuestionState(false);
+                        Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
+                        questionPlayerState.setTimer(0);
+                        questionPlayerState.setTimerTaskId(0);
+                        questionPlayerState.setAllocatedQuestion(null);
+                        String inventoryTitle = player.getOpenInventory().getTitle();
+                        if (QuestionList.containsQuestion(inventoryTitle)) {
+                            player.closeInventory();
+                        }
+                        player.sendMessage("The END!");
+                    } else {
+                        updateInventoryTitle(player, question, Util.secondsToMinutes(questionPlayerState.getTimer()));
+                        questionPlayerState.setTimer(questionPlayerState.getTimer() - 1);
+                    }
                 }
             }
         }, 0, 20L));
@@ -64,6 +59,7 @@ public class QuestionMisc {
         if (QuestionList.containsQuestion(inventoryTitle)) {
             questionPlayerState.getPlayer().closeInventory();
         }
+        //ScoreBoardManager.updateScoreBoard();
     }
 
     public static void interruptQuestion(QuestionPlayerState questionPlayerState) {

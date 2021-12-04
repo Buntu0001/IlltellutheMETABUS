@@ -1,7 +1,10 @@
 package com.buntu.illtelluthemetabus;
 
+import com.google.common.base.Strings;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,21 +15,32 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 public class EventListener implements Listener {
     @EventHandler
     public void onPlayerClickInventory(InventoryClickEvent inventoryClickEvent) {
         Player player = (Player) inventoryClickEvent.getWhoClicked();
-        String inventoryTitle = inventoryClickEvent.getView().getTitle();
+        String inventoryTitle = inventoryClickEvent.getView().getTopInventory().getTitle();
         if (QuestionList.containsQuestion(inventoryTitle)) {
             inventoryClickEvent.setCancelled(true);
             Integer clickedInventorySLot = inventoryClickEvent.getSlot();
             Integer answerNumber = Util.determineAnswerNumber(clickedInventorySLot);
             if (QuestionPlayerStateList.containsQuestionPlayerState(player)) {
-                if (QuestionPlayerStateList.getQuestionPlayerState(player).getAllocatedQuestion().getQuestionAnswer() == answerNumber) {
-                    player.sendMessage("정답!");
-                    QuestionMisc.completeQuestion(QuestionPlayerStateList.getQuestionPlayerState(player));
-                } else {
-                    player.sendMessage("오답!");
+                QuestionPlayerState questionPlayerState = QuestionPlayerStateList.getQuestionPlayerState(player);
+                if (questionPlayerState.getSolvingQuestionState()) {
+                    if (clickedInventorySLot == 11 || clickedInventorySLot == 12 || clickedInventorySLot == 13 || clickedInventorySLot == 14 || clickedInventorySLot == 15) {
+                        if (inventoryClickEvent.getCurrentItem().getType() != Material.AIR) {
+                            if (StringUtils.isNotEmpty(inventoryClickEvent.getCurrentItem().getItemMeta().getDisplayName())) {
+                                if (questionPlayerState.getAllocatedQuestion().getQuestionAnswer() == answerNumber) {
+                                    player.sendMessage("정답!");
+                                    QuestionMisc.completeQuestion(questionPlayerState);
+                                } else {
+                                    player.sendMessage("오답!");
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -55,7 +69,7 @@ public class EventListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
         QuestionPlayerState questionPlayerState = new QuestionPlayerState(playerJoinEvent.getPlayer());
         QuestionPlayerStateList.putQuestionPlayerState(questionPlayerState);
-        ScoreBoardManager.updateScoreBoard();
+        //ScoreBoardManager.updateScoreBoard();
     }
 
     @EventHandler
@@ -65,7 +79,7 @@ public class EventListener implements Listener {
             if (QuestionPlayerStateList.getQuestionPlayerState(player).getSolvingQuestionState()) {
                 QuestionMisc.interruptQuestion(QuestionPlayerStateList.getQuestionPlayerState(player));
                 QuestionPlayerStateList.removeQuestionPlayerState(player);
-                ScoreBoardManager.updateScoreBoard();
+                //ScoreBoardManager.updateScoreBoard();
             }
         }
     }

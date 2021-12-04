@@ -1,5 +1,6 @@
 package com.buntu.illtelluthemetabus;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -15,6 +16,9 @@ public final class Main extends JavaPlugin {
         Util.plugin = this;
         checkPluginFolderExist();
         Util.yamlManager = new YamlManager(new File(pluginFolder + "\\question.yml"));
+
+        ScoreBoardManager.setScoreBoardTitle("획득 점수");
+        ScoreBoardManager.repeatUpdateScoreBoard();
 
         getCommand("문제").setExecutor(new CommandListener());
         getCommand("문제보기").setExecutor(new CommandListener());

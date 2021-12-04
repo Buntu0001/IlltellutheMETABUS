@@ -1,10 +1,12 @@
 package com.buntu.illtelluthemetabus;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -43,7 +45,7 @@ public class Util {
         } else {
             bufferString = String.valueOf(buffer);
             if (bufferString.length() == 1) {
-                 bufferString = "0" + bufferString;
+                bufferString = "0" + bufferString;
             }
             return new Object[]{0, bufferString};
         }
@@ -53,12 +55,12 @@ public class Util {
         return clickedInventorySlot - 10;
     }
 
-    public static ArrayList<QuestionPlayerState> sortRanking(ArrayList<QuestionPlayerState> unsortRanking) {
+    public static ArrayList<QuestionPlayerState> reverseSequentialSort(ArrayList<QuestionPlayerState> unsortRanking) {
         ArrayList<QuestionPlayerState> sortRank = new ArrayList<>(unsortRanking);
         Integer size = sortRank.size();
         for (int i = 0; i < size; i++) {
             for (int j = i + 1; j < size; j++) {
-                if (sortRank.get(i).getPlayerScore() > sortRank.get(j).getPlayerScore()) {
+                if (sortRank.get(i).getPlayerScore() < sortRank.get(j).getPlayerScore()) {
                     QuestionPlayerState tempQuestionPlayerState = sortRank.get(i);
                     sortRank.set(i, sortRank.get(j));
                     sortRank.set(j, tempQuestionPlayerState);
@@ -66,6 +68,37 @@ public class Util {
             }
         }
         return sortRank;
+    }
+
+    public static List<Integer> findIndexes(String word, String document) {
+        List<Integer> indexList = new ArrayList<Integer>();
+        int index = document.indexOf(word);
+        while (index != -1) {
+            indexList.add(index);
+            index = document.indexOf(word, index + word.length());
+        }
+        return indexList;
+    }
+
+    public static String animatedString(String normalString, Integer highlightIndex, ChatColor backHighlightChatColor, ChatColor highlightChatColor) {
+        String title = normalString;
+        Integer[] spaceIndex = findIndexes(" ", title).toArray(new Integer[0]);
+        title = title.replace(" ", "");
+        String[] splitString = title.split("");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < splitString.length; i++) {
+            if (i == highlightIndex) {
+                stringBuilder.append(highlightChatColor).append(splitString[i]);
+            } else if (i == highlightIndex - 1) {
+                stringBuilder.append(backHighlightChatColor).append(splitString[i]);
+            } else {
+                stringBuilder.append(ChatColor.WHITE).append(splitString[i]);
+            }
+        }
+        for (Integer index : spaceIndex) {
+            stringBuilder.insert(index * 3, " ");
+        }
+        return stringBuilder.toString();
     }
 
     public static Plugin plugin;
