@@ -17,68 +17,78 @@ public class QuestionMisc {
         QuestionPlayerState questionPlayerState = QuestionPlayerStateList.getQuestionPlayerState(player);
         questionPlayerState.setAllocatedQuestion(question);
         questionPlayerState.setSolvingQuestionState(true);
-        questionPlayerState.setTimer(question.getQuestionLimitTime());
-
+        questionPlayerState.setMilliSeconds(System.currentTimeMillis() + ((question.getQuestionLimitTime() + 1) * 1000L));
+        questionPlayerState.setGlassPaneColorState(0);
         makeQuestionGui(player, question);
 
         questionPlayerState.setUpdateTaskId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
             @Override
             public void run() {
-                updateInventoryTitle(player, question, Util.secondsToMinutes(questionPlayerState.getTimer()));
+                updateInventoryTitle(player, question, Util.secondsToMinutes(questionPlayerState.getMilliSeconds()));
             }
         }, 0, 5L));
 
-        questionPlayerState.setTimerTaskId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
+        questionPlayerState.setMilliTaskId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
             @Override
             public void run() {
                 if (questionPlayerState.getSolvingQuestionState()) {
-                    if (questionPlayerState.getTimer() < 0) {
+                    if (isTimeExpired(questionPlayerState)) {
                         questionPlayerState.setSolvingQuestionState(false);
-                        Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
+                        Bukkit.getScheduler().cancelTask(questionPlayerState.getMilliTaskId());
                         Bukkit.getScheduler().cancelTask(questionPlayerState.getUpdateTaskId());
-                        questionPlayerState.setTimer(0);
-                        questionPlayerState.setTimerTaskId(0);
+                        questionPlayerState.setMilliSeconds(0L);
+                        questionPlayerState.setMilliTaskId(0);
                         questionPlayerState.setUpdateTaskId(0);
                         questionPlayerState.setAllocatedQuestion(null);
+                        questionPlayerState.setGlassPaneColorState(0);
                         String inventoryTitle = player.getOpenInventory().getTitle();
                         if (QuestionList.containsQuestion(inventoryTitle)) {
                             player.closeInventory();
                         }
                         player.sendMessage(Util.translate("&c시간 초과!"));
-                    } else {
-                        questionPlayerState.setTimer(questionPlayerState.getTimer() - 1);
                     }
+                } else {
+                    Bukkit.getScheduler().cancelTask(questionPlayerState.getMilliTaskId());
+                    Bukkit.getScheduler().cancelTask(questionPlayerState.getUpdateTaskId());
                 }
             }
-        }, 0, 20L));
+        }, 0, 1L));
 
         QuestionPlayerStateList.putQuestionPlayerState(questionPlayerState);
 
     }
 
+    public static Boolean isTimeExpired(QuestionPlayerState questionPlayerState) {
+        return (questionPlayerState.getMilliSeconds() - System.currentTimeMillis()) / 1000 < 0;
+    }
+
     public static void completeQuestion(QuestionPlayerState questionPlayerState) {
         questionPlayerState.setSolvingQuestionState(false);
-        Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
+        Bukkit.getScheduler().cancelTask(questionPlayerState.getMilliTaskId());
         Bukkit.getScheduler().cancelTask(questionPlayerState.getUpdateTaskId());
-        questionPlayerState.setTimer(0);
-        questionPlayerState.setTimerTaskId(0);
+        questionPlayerState.setMilliSeconds(0L);
+        questionPlayerState.setMilliTaskId(0);
         questionPlayerState.setUpdateTaskId(0);
         questionPlayerState.setPlayerScore(questionPlayerState.getPlayerScore() + questionPlayerState.getAllocatedQuestion().getQuestionScore());
-        questionPlayerState.setAllocatedQuestion(null);
-        questionPlayerState.setGlassPaneColorState(0);
-        String inventoryTitle = questionPlayerState.getPlayer().getOpenInventory().getTitle();
-        if (QuestionList.containsQuestion(inventoryTitle)) {
-            questionPlayerState.getPlayer().closeInventory();
-        }
-        //ScoreBoardManager.updateScoreBoard();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
+            @Override
+            public void run() {
+                String inventoryTitle = questionPlayerState.getPlayer().getOpenInventory().getTitle();
+                if (QuestionList.containsQuestion(inventoryTitle)) {
+                    questionPlayerState.getPlayer().closeInventory();
+                    questionPlayerState.setAllocatedQuestion(null);
+                    questionPlayerState.setGlassPaneColorState(0);
+                }
+            }
+        }, 20L * 3);
     }
 
     public static void interruptQuestion(QuestionPlayerState questionPlayerState) {
         questionPlayerState.setSolvingQuestionState(false);
-        Bukkit.getScheduler().cancelTask(questionPlayerState.getTimerTaskId());
+        Bukkit.getScheduler().cancelTask(questionPlayerState.getMilliTaskId());
         Bukkit.getScheduler().cancelTask(questionPlayerState.getUpdateTaskId());
-        questionPlayerState.setTimer(0);
-        questionPlayerState.setTimerTaskId(0);
+        questionPlayerState.setMilliSeconds(0L);
+        questionPlayerState.setMilliTaskId(0);
         questionPlayerState.setUpdateTaskId(0);
         questionPlayerState.setAllocatedQuestion(null);
     }
@@ -87,7 +97,7 @@ public class QuestionMisc {
         if (QuestionPlayerStateList.containsQuestionPlayerState(player)) {
             QuestionPlayerState questionPlayerState = QuestionPlayerStateList.getQuestionPlayerState(player);
             if (questionPlayerState.getSolvingQuestionState()) {
-                if (questionPlayerState.getTimer() >= 0) {
+                if (!isTimeExpired(questionPlayerState)) {
                     EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                     PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(entityPlayer.activeContainer.windowId,
                             "minecraft:chest", new ChatMessage(ChatColor.translateAlternateColorCodes('&', Util.translate("&0" + question.getQuestionTitle() + String.format("&0" + Util.inventoryTitleSplitter + "남은시간: %s:%s", remainingTime[0], remainingTime[1])))),

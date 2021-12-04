@@ -1,6 +1,5 @@
 package com.buntu.illtelluthemetabus;
 
-import com.buntu.illtelluthemetabus.Question;
 import org.bukkit.entity.Player;
 
 class QuestionPlayerState {
@@ -8,8 +7,8 @@ class QuestionPlayerState {
     private Player player;
     private Boolean solvingQuestionState = false;
     private Integer score = 0;
-    private Integer timer = 0;
-    private Integer timerTaskId = 0;
+    private Long milliSeconds = 0L;
+    private Integer milliTaskId = 0;
     private Integer updateTaskId = 0;
     private Integer glassPaneColorState = 0;
 
@@ -33,12 +32,12 @@ class QuestionPlayerState {
         this.solvingQuestionState = state;
     }
 
-    public void setTimer(Integer seconds) {
-        this.timer = seconds;
+    public void setMilliSeconds(Long seconds) {
+        this.milliSeconds = seconds;
     }
 
-    public void setTimerTaskId(Integer taskId) {
-        this.timerTaskId = taskId;
+    public void setMilliTaskId(Integer taskId) {
+        this.milliTaskId = taskId;
     }
 
     public void setUpdateTaskId(Integer taskId) {
@@ -59,12 +58,12 @@ class QuestionPlayerState {
         return this.score;
     }
 
-    public Integer getTimer() {
-        return this.timer;
+    public Long getMilliSeconds() {
+        return this.milliSeconds;
     }
 
-    public Integer getTimerTaskId() {
-        return this.timerTaskId;
+    public Integer getMilliTaskId() {
+        return this.milliTaskId;
     }
 
     public Integer getUpdateTaskId() {

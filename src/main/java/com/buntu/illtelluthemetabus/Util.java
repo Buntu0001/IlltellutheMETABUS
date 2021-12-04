@@ -33,8 +33,9 @@ public class Util {
         return input == null ? null : STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
     }
 
-    public static Object[] secondsToMinutes(Integer seconds) {
-        Integer buffer = seconds;
+    public static Object[] secondsToMinutes(Long seconds) {
+        Long milliBuffer = seconds - System.currentTimeMillis();
+        Integer buffer = milliBuffer.intValue() / 1000;
         String bufferString;
         if (buffer >= 60) {
             Integer minutes = buffer / 60;

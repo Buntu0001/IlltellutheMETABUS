@@ -6,6 +6,7 @@ com\buntu\illtelluthemetabus\QuestionList.class
 com\buntu\illtelluthemetabus\EventListener.class
 com\buntu\illtelluthemetabus\ScoreBoardManager$1.class
 com\buntu\illtelluthemetabus\CommandListener.class
+com\buntu\illtelluthemetabus\QuestionMisc$3.class
 com\buntu\illtelluthemetabus\QuestionPlayerStateList.class
 com\buntu\illtelluthemetabus\ScoreBoardManager.class
 com\buntu\illtelluthemetabus\Util.class
@@ -13,5 +14,4 @@ com\buntu\illtelluthemetabus\YamlManager.class
 com\buntu\illtelluthemetabus\EventListener$2.class
 com\buntu\illtelluthemetabus\QuestionPlayerState.class
 com\buntu\illtelluthemetabus\QuestionMisc.class
-com\buntu\illtelluthemetabus\EventListener$3.class
 com\buntu\illtelluthemetabus\Question.class

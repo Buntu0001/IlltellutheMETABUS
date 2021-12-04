@@ -29,31 +29,30 @@ public class EventListener implements Listener {
             if (QuestionPlayerStateList.containsQuestionPlayerState(player)) {
                 QuestionPlayerState questionPlayerState = QuestionPlayerStateList.getQuestionPlayerState(player);
                 if (questionPlayerState.getSolvingQuestionState()) {
-                    if (clickedInventorySLot == 11 || clickedInventorySLot == 12 || clickedInventorySLot == 13 || clickedInventorySLot == 14 || clickedInventorySLot == 15) {
-                        if (inventoryClickEvent.getCurrentItem().getType() != Material.AIR) {
-                            if (StringUtils.isNotEmpty(inventoryClickEvent.getCurrentItem().getItemMeta().getDisplayName())) {
-                                if (questionPlayerState.getAllocatedQuestion().getQuestionAnswer() == answerNumber) {
-                                    if (questionPlayerState.getGlassPaneColorState() == 0) {
-                                        questionPlayerState.setGlassPaneColorState(5);
-                                        player.getOpenInventory().close();
-                                        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                QuestionMisc.completeQuestion(questionPlayerState);
-                                            }
-                                        }, 20L * 2);
-                                    }
-                                } else {
-                                    if (questionPlayerState.getGlassPaneColorState() == 0) {
-                                        questionPlayerState.setGlassPaneColorState(14);
-                                        player.getOpenInventory().close();
-                                        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                questionPlayerState.setGlassPaneColorState(0);
-                                                player.getOpenInventory().close();
-                                            }
-                                        }, 20L * 2);
+                    if (!QuestionMisc.isTimeExpired(questionPlayerState)) {
+                        if (clickedInventorySLot == 11 || clickedInventorySLot == 12 || clickedInventorySLot == 13 || clickedInventorySLot == 14 || clickedInventorySLot == 15) {
+                            if (inventoryClickEvent.getCurrentItem().getType() != Material.AIR) {
+                                if (StringUtils.isNotEmpty(inventoryClickEvent.getCurrentItem().getItemMeta().getDisplayName())) {
+                                    if (questionPlayerState.getAllocatedQuestion().getQuestionAnswer() == answerNumber) {
+                                        if (questionPlayerState.getGlassPaneColorState() == 0) {
+                                            questionPlayerState.setGlassPaneColorState(5);
+                                            player.getOpenInventory().close();
+                                            QuestionMisc.completeQuestion(questionPlayerState);
+                                        }
+                                    } else {
+                                        if (questionPlayerState.getGlassPaneColorState() == 0) {
+                                            questionPlayerState.setGlassPaneColorState(14);
+                                            player.getOpenInventory().close();
+                                            Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    questionPlayerState.setGlassPaneColorState(0);
+                                                    if (QuestionList.containsQuestion(player.getOpenInventory().getTopInventory().getTitle())) {
+                                                        player.getOpenInventory().close();
+                                                    }
+                                                }
+                                            }, 20L * 3);
+                                        }
                                     }
                                 }
                             }
