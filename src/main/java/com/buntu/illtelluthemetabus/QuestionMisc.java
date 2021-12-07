@@ -76,9 +76,9 @@ public class QuestionMisc {
                 String inventoryTitle = questionPlayerState.getPlayer().getOpenInventory().getTitle();
                 if (QuestionList.containsQuestion(inventoryTitle)) {
                     questionPlayerState.getPlayer().closeInventory();
-                    questionPlayerState.setAllocatedQuestion(null);
-                    questionPlayerState.setGlassPaneColorState(0);
                 }
+                questionPlayerState.setAllocatedQuestion(null);
+                questionPlayerState.setGlassPaneColorState(0);
             }
         }, 20L * 3);
     }
