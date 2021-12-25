@@ -4,64 +4,58 @@ import java.util.ArrayList;
 
 public class Question {
 
-  private String questionTitle;
-  private String questionContext;
-  private ArrayList<String> questionContextLores;
-  private ArrayList<String> questionCommentary;
-  private ArrayList<String> questionOptions = new ArrayList<>();
+  private String title;
+  private String context;
+  private ArrayList<String> lores;
+  private ArrayList<String> commentary;
+  private ArrayList<String> options = new ArrayList<>();
   private String difficulty;
-  private int questionAnswer;
-  private int questionScore;
-  private int questionLimitTime;
+  private int answer;
+  private int score;
 
   public Question(String title, String context, ArrayList<String> lores, ArrayList<String> commentary,
       ArrayList<String> options, String difficulty,
-      int answer, int score, int limitTime) {
-    this.questionTitle = title;
-    this.questionContext = context;
-    this.questionContextLores = lores;
-    this.questionCommentary = commentary;
-    this.questionOptions = options;
+      int answer, int score) {
+    this.title = title;
+    this.context = context;
+    this.lores = lores;
+    this.commentary = commentary;
+    this.options = options;
     this.difficulty = difficulty;
-    this.questionAnswer = answer;
-    this.questionScore = score;
-    this.questionLimitTime = limitTime;
+    this.answer = answer;
+    this.score = score;
 
   }
 
-  public String getQuestionTitle() {
-    return this.questionTitle;
+  public String getTitle() {
+    return this.title;
   }
 
-  public String getQuestionContext() {
-    return this.questionContext;
+  public String getContext() {
+    return this.context;
   }
 
-  public ArrayList<String> getQuestionContextLores() {
-    return this.questionContextLores;
+  public ArrayList<String> getContextLores() {
+    return this.lores;
   }
 
-  public ArrayList<String> getQuestionCommentary() {
-    return this.questionCommentary;
+  public ArrayList<String> getCommentary() {
+    return this.commentary;
   }
 
-  public ArrayList<String> getQuestionOptions() {
-    return this.questionOptions;
+  public ArrayList<String> getOptions() {
+    return this.options;
   }
 
   public String getDifficulty() {
     return this.difficulty;
   }
 
-  public int getQuestionAnswer() {
-    return this.questionAnswer;
+  public int getAnswer() {
+    return this.answer;
   }
 
-  public int getQuestionScore() {
-    return this.questionScore;
-  }
-
-  public int getQuestionLimitTime() {
-    return this.questionLimitTime;
+  public int getScore() {
+    return this.score;
   }
 }

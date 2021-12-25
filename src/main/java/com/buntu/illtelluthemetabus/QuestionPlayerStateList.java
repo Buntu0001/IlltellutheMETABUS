@@ -5,21 +5,21 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class QuestionPlayerStateList {
-    private static HashMap<Player, QuestionPlayerState> questionPlayerStateMap = new HashMap<>();
+  private static HashMap<Player, QuestionPlayerState> playerStateMap = new HashMap<>();
 
-    public static void putQuestionPlayerState(QuestionPlayerState questionPlayerState) {
-        questionPlayerStateMap.put(questionPlayerState.getPlayer(), questionPlayerState);
-    }
+  public static void put(QuestionPlayerState questionPlayerState) {
+    playerStateMap.put(questionPlayerState.getPlayer(), questionPlayerState);
+  }
 
-    public static QuestionPlayerState getQuestionPlayerState(Player player) {
-        return questionPlayerStateMap.get(player);
-    }
+  public static QuestionPlayerState get(Player player) {
+    return playerStateMap.get(player);
+  }
 
-    public static Boolean containsQuestionPlayerState(Player player) {
-        return questionPlayerStateMap.containsKey(player);
-    }
+  public static Boolean contain(Player player) {
+    return playerStateMap.containsKey(player);
+  }
 
-    public static void removeQuestionPlayerState(Player player) {
-        questionPlayerStateMap.remove(player);
-    }
+  public static void remove(Player player) {
+    playerStateMap.remove(player);
+  }
 }

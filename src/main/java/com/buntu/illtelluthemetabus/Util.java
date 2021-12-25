@@ -1,15 +1,12 @@
 package com.buntu.illtelluthemetabus;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Util {
@@ -19,7 +16,7 @@ public class Util {
     return ChatColor.translateAlternateColorCodes('&', message);
   }
 
-  public enum GuiType {
+  public enum GUI_TYPE {
     NORMAL,
     END
   };
@@ -59,7 +56,7 @@ public class Util {
     }
   }
 
-  public static Integer determineAnswerNumber(Integer clickedInventorySlot) {
+  public static Integer checkAnswer(Integer clickedInventorySlot) {
     return clickedInventorySlot - 10;
   }
 
@@ -68,7 +65,7 @@ public class Util {
     Integer size = sortRank.size();
     for (int i = 0; i < size; i++) {
       for (int j = i + 1; j < size; j++) {
-        if (sortRank.get(i).getPlayerScore() < sortRank.get(j).getPlayerScore()) {
+        if (sortRank.get(i).getScore() < sortRank.get(j).getScore()) {
           QuestionPlayerState tempQuestionPlayerState = sortRank.get(i);
           sortRank.set(i, sortRank.get(j));
           sortRank.set(j, tempQuestionPlayerState);
