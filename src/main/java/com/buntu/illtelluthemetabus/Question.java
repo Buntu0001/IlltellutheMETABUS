@@ -12,10 +12,11 @@ public class Question {
   private String difficulty;
   private int answer;
   private int score;
+  private String responseNPC;
 
   public Question(String title, String context, ArrayList<String> lores, ArrayList<String> commentary,
       ArrayList<String> options, String difficulty,
-      int answer, int score) {
+      int answer, int score, String npc) {
     this.title = title;
     this.context = context;
     this.lores = lores;
@@ -24,6 +25,7 @@ public class Question {
     this.difficulty = difficulty;
     this.answer = answer;
     this.score = score;
+    this.responseNPC = npc;
 
   }
 
@@ -57,5 +59,9 @@ public class Question {
 
   public int getScore() {
     return this.score;
+  }
+
+  public String getNPC() {
+    return this.responseNPC;
   }
 }

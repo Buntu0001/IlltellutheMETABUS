@@ -36,6 +36,7 @@ public class YamlManager {
       settingYml.set("question.기본문제.난이도", "&a하");
       settingYml.set("question.기본문제.정답", 5);
       settingYml.set("question.기본문제.점수", 523);
+      settingYml.set("question.심화문제.NPC", "[ 교장선생님 ]");
 
       settingYml.set("question.심화문제.문제내용", "&f마크서버의 주소는?");
       lores.clear();
@@ -54,6 +55,7 @@ public class YamlManager {
       settingYml.set("question.심화문제.난이도", "&6중");
       settingYml.set("question.심화문제.정답", 4);
       settingYml.set("question.심화문제.점수", 123);
+      settingYml.set("question.심화문제.NPC", "[ 음악선생님 ]");
 
       try {
         settingYml.save(settingFile);
@@ -89,10 +91,11 @@ public class YamlManager {
         String difficulty = String.valueOf(settingYml.get("question." + node + ".난이도"));
         int answer = (int) settingYml.get("question." + node + ".정답");
         int score = (int) settingYml.get("question." + node + ".점수");
+        String npcName = String.valueOf(settingYml.get("question.") + node + ".NPC");
 
         Question question = new Question(title, context, lores, commentary,
             options,
-            difficulty, answer, score);
+            difficulty, answer, score, npcName);
         QuestionList.put(question);
         System.out.println(String.format("%s 문제가 등록되었습니다.", title));
       }

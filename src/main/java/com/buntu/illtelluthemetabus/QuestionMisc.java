@@ -18,9 +18,29 @@ public class QuestionMisc {
   public static void completeQuestion(QuestionPlayerState state) {
     state.setScore(
         state.getScore() + state.getQuestion().getScore());
+    makeGUI(GUI_TYPE.END, state.getPlayer(), state.getQuestion());
+    Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
+      @Override
+      public void run() {
+        state.getPlayer().closeInventory();
+        state.setCompleteSolving(false);
+        state.setQuestion(null);
+      }
 
-    // open commentary GUI maybe
-    state.setQuestion(null);
+    }, 20L * 5);
+  }
+
+  public static void failQuestion(QuestionPlayerState state) {
+    makeGUI(GUI_TYPE.END, state.getPlayer(), state.getQuestion());
+    Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
+      @Override
+      public void run() {
+        state.getPlayer().closeInventory();
+        state.setCompleteSolving(false);
+        state.setQuestion(null);
+      }
+
+    }, 20L * 3);
   }
 
   public static void makeGUI(Util.GUI_TYPE guiType, Player player, Question question) {
@@ -28,10 +48,12 @@ public class QuestionMisc {
 
     switch (guiType) {
       case NORMAL:
-        // open normal GUI
+        inventory = MakeGui.getNormalGUI(inventory, player, question);
+        player.openInventory(inventory);
         break;
       case END:
-        // open commentary GUI
+        inventory = MakeGui.getCommentaryGUI(inventory, player, question);
+        player.openInventory(inventory);
         break;
       default:
         System.out.println("Error on the makeQuestionGui");

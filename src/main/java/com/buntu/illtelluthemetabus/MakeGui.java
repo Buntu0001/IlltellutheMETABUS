@@ -73,6 +73,13 @@ public class MakeGui {
 
     // center inventory slot num 11 12 13 14 15
     // | null | some item (name, commentary) || null || answer state || null
+    ItemStack correctItem = new ItemStack(Material.APPLE);
+    ItemMeta correctItemMeta = correctItem.getItemMeta();
+    correctItemMeta.setDisplayName("");
+    correctItemMeta.setLore(Util.translate(question.getCommentary()));
+    correctItem.setItemMeta(correctItemMeta);
+
+    inventory.setItem(12, correctItem);
 
     ItemStack glassPane = Util.getGlassPane(5);
     inventory.setItem(0, glassPane);
