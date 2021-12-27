@@ -21,6 +21,8 @@ public class Util {
     END
   };
 
+  public static Boolean questionAvailable = false;
+
   public static ArrayList<String> translate(ArrayList<String> message) {
     ArrayList<String> changeArrayListString = new ArrayList<>(message);
     for (int i = 0; i < changeArrayListString.size(); i++) {

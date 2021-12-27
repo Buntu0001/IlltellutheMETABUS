@@ -91,7 +91,7 @@ public class YamlManager {
         String difficulty = String.valueOf(settingYml.get("question." + node + ".난이도"));
         int answer = (int) settingYml.get("question." + node + ".정답");
         int score = (int) settingYml.get("question." + node + ".점수");
-        String npcName = String.valueOf(settingYml.get("question.") + node + ".NPC");
+        String npcName = String.valueOf(settingYml.get("question." + node + ".NPC"));
 
         Question question = new Question(title, context, lores, commentary,
             options,
@@ -99,6 +99,8 @@ public class YamlManager {
         QuestionList.put(question);
         System.out.println(String.format("%s 문제가 등록되었습니다.", title));
       }
+
+      QuestionList.initNPCMap();
     } catch (Exception ex) {
       System.out.println("question.yml 파일의 형식이 잘못되었습니다.");
       System.out.println("파일을 백업한 후, 서버를 재부팅하여 예시 파일 형식을 참조해주세요.");

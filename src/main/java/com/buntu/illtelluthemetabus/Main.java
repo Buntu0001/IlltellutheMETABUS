@@ -14,7 +14,8 @@ public final class Main extends JavaPlugin {
     System.out.println("문제 내용은 question.yml 파일을 참조해주세요!");
     Util.plugin = this;
     checkPluginFolderExist();
-    Util.yamlManager = new YamlManager(new File(pluginFolder + "\\question.yml"));
+    Util.yamlManager = new YamlManager(new File(pluginFolder + "/question.yml"));
+    System.out.println(pluginFolder.getPath());
     Util.initaillizeGlassPane();
 
     ScoreBoardManager.setScoreBoardTitle("획득 점수");

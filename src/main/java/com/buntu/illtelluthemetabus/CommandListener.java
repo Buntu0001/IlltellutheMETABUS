@@ -38,6 +38,7 @@ public class CommandListener implements CommandExecutor {
             player.sendMessage(Util.translate(String.format("&4난이도: %s", question.getDifficulty())));
             player.sendMessage(Util.translate(String.format("&b정답: %d번", question.getAnswer())));
             player.sendMessage(Util.translate(String.format("&a점수: %d점", question.getScore())));
+            player.sendMessage(Util.translate(String.format("&dNPC: %d", question.getNPC())));
             return true;
           } catch (Exception ex) {
             player.sendMessage(Util.translate("&c[오류] &f알 수 없는 문제 이름입니다."));

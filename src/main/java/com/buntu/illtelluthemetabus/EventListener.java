@@ -8,38 +8,43 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import net.minecraft.server.v1_12_R1.Entity;
+import net.citizensnpcs.api.event.NPCRightClickEvent;
 
 public class EventListener implements Listener {
   @EventHandler
   public void onPlayerClickInventory(InventoryClickEvent e) {
     Player player = (Player) e.getWhoClicked();
-    String inventoryTitle = e.getView().getTopInventory().getTitle();
+    String inventoryTitle = e.getInventory().getTitle();
     if (QuestionList.contain(inventoryTitle)) {
       e.setCancelled(true);
       Integer clickedInventorySLot = e.getSlot();
-      Integer answerNumber = Util.checkAnswer(clickedInventorySLot);
-      Question question = QuestionList.get(inventoryTitle);
-      QuestionPlayerState state = QuestionPlayerStateList.get(player);
-      if (answerNumber == question.getAnswer()) {
-        // make commentary GUI
-        QuestionMisc.completeQuestion(state);
-      } else {
-        // make commentary GUI
-        QuestionMisc.failQuestion(state);
+      System.out.println(inventoryTitle);
+      System.out.println(clickedInventorySLot.toString());
+      if (clickedInventorySLot >= 11 && clickedInventorySLot <= 15) {
+        Integer answerNumber = Util.checkAnswer(clickedInventorySLot);
+        System.out.println(answerNumber.toString());
+        Question question = QuestionList.get(inventoryTitle);
+        QuestionPlayerState state = QuestionPlayerStateList.get(player);
+        if (answerNumber == question.getAnswer()) {
+          // make commentary GUI
+          QuestionMisc.completeQuestion(state);
+        } else {
+          // make commentary GUI
+          QuestionMisc.failQuestion(state);
+        }
       }
     }
   }
 
   @EventHandler
-  public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
-    Player player = e.getPlayer();
-    Entity entity = (Entity) e.getRightClicked();
-    Bukkit.broadcastMessage(player.getName() + " Clicked NPC " + entity.getName());
+  public void onPlayerNPCRightClickEvent(NPCRightClickEvent e) {
+    String npcName = e.getNPC().getName();
+    Bukkit.broadcastMessage(npcName);
+    Question question = QuestionList.getNPC(npcName);
+    QuestionMisc.initSolvingQuestion(e.getClicker(), question);
   }
 
   @EventHandler

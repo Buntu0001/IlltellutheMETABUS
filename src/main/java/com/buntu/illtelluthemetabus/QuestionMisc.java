@@ -10,7 +10,6 @@ public class QuestionMisc {
   public static void initSolvingQuestion(Player player, Question question) {
     QuestionPlayerState state = QuestionPlayerStateList.get(player);
     state.setQuestion(question);
-    QuestionPlayerStateList.put(state);
 
     makeGUI(GUI_TYPE.NORMAL, player, question);
   }

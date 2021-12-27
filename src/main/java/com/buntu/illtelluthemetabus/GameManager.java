@@ -5,10 +5,13 @@ import java.io.FileWriter;
 import java.time.LocalDate;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
+
 public class GameManager {
   private Long globalTimer = 0L;
   private HashMap<String, QuestionPlayerState> ranking = new HashMap<>();
-  private Boolean gameStarted = false;
+  private Integer limitTime = 5;
+  private Integer timerTaskId = 0;
 
   public void setGlobalTimer(Long time) {
     this.globalTimer = time;
@@ -27,18 +30,29 @@ public class GameManager {
   }
 
   public void gameStart() {
-    this.gameStarted = true;
+    Util.questionAvailable = true;
+    this.globalTimer = System.currentTimeMillis() + (limitTime * 60000);
+    Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
+      @Override
+      public void run() {
+        if (isGameEnd()) {
+          Bukkit.broadcastMessage("&a[공지] 게임이 종료되었습니다.");
+          Util.questionAvailable = false;
+          Bukkit.getScheduler().cancelTask(timerTaskId);
+          timerTaskId = 0;
+        }
+      }
+    }, 0, 20L);
   }
 
   public void gameEnd() {
-    this.gameStarted = false;
+    Util.questionAvailable = false;
   }
 
   public Boolean isGameEnd() {
-    if (this.gameStarted) {
+    if (Util.questionAvailable) {
       Long currentTime = System.currentTimeMillis();
       if (currentTime >= globalTimer) {
-        gameStarted = false;
         return true;
       } else {
         return false;
