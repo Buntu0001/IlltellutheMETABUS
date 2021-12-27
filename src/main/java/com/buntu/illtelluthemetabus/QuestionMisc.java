@@ -6,18 +6,26 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.util.Objects;
+
 public class QuestionMisc {
   public static void initSolvingQuestion(Player player, Question question) {
-    QuestionPlayerState state = QuestionPlayerStateList.get(player);
-    state.setQuestion(question);
+    if (!QuestionPlayerStateList.get(player).isSolved(question)) {
+      QuestionPlayerState state = QuestionPlayerStateList.get(player);
+      state.setQuestion(question);
 
-    makeGUI(GUI_TYPE.NORMAL, player, question);
+      makeGUI(GUI_TYPE.NORMAL, player, question);
+    } else {
+      player.sendMessage(Util.translate("&c[METAVERSE] &7이미 푼 문제입니다."));
+    }
   }
 
   public static void completeQuestion(QuestionPlayerState state) {
     state.setScore(
         state.getScore() + state.getQuestion().getScore());
     makeGUI(GUI_TYPE.END, state.getPlayer(), state.getQuestion());
+    state.setCompleteSolving(true);
+    state.putSolvedQuestion(state.getQuestion());
     Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
       @Override
       public void run() {
@@ -31,6 +39,8 @@ public class QuestionMisc {
 
   public static void failQuestion(QuestionPlayerState state) {
     makeGUI(GUI_TYPE.END, state.getPlayer(), state.getQuestion());
+    state.setCompleteSolving(true);
+    state.putSolvedQuestion(state.getQuestion());
     Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
       @Override
       public void run() {
@@ -43,21 +53,23 @@ public class QuestionMisc {
   }
 
   public static void makeGUI(Util.GUI_TYPE guiType, Player player, Question question) {
-    Inventory inventory = Bukkit.createInventory(null, 9 * 3, Util.translate("&0" + question.getTitle()));
+    if (!Objects.isNull(question)) {
+      Inventory inventory = Bukkit.createInventory(null, 9 * 3, Util.translate("&0" + question.getTitle()));
 
-    switch (guiType) {
-      case NORMAL:
-        inventory = MakeGui.getNormalGUI(inventory, player, question);
-        player.openInventory(inventory);
-        break;
-      case END:
-        inventory = MakeGui.getCommentaryGUI(inventory, player, question);
-        player.openInventory(inventory);
-        break;
-      default:
-        System.out.println("Error on the makeQuestionGui");
-        System.out.println(player.getName());
-        System.out.println(question.getTitle());
+      switch (guiType) {
+        case NORMAL:
+          inventory = MakeGui.getNormalGUI(inventory, player, question);
+          player.openInventory(inventory);
+          break;
+        case END:
+          inventory = MakeGui.getCommentaryGUI(inventory, player, question);
+          player.openInventory(inventory);
+          break;
+        default:
+          System.out.println("Error on the makeQuestionGui");
+          System.out.println(player.getName());
+          System.out.println(question.getTitle());
+      }
     }
   }
 }

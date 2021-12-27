@@ -87,26 +87,25 @@ public class Util {
     return indexList;
   }
 
-  public static String animatedString(String normalString, Integer highlightIndex, ChatColor backHighlightChatColor,
-      ChatColor highlightChatColor) {
-    String title = normalString;
-    Integer[] spaceIndex = findIndexes(" ", title).toArray(new Integer[0]);
-    title = title.replace(" ", "");
-    String[] splitString = title.split("");
-    StringBuilder stringBuilder = new StringBuilder();
-    for (int i = 0; i < splitString.length; i++) {
-      if (i == highlightIndex) {
-        stringBuilder.append(highlightChatColor).append(splitString[i]);
-      } else if (i == highlightIndex - 1) {
-        stringBuilder.append(backHighlightChatColor).append(splitString[i]);
-      } else {
-        stringBuilder.append(ChatColor.WHITE).append(splitString[i]);
+  public static String animatedString(String normalString, Integer index) {
+    index -= 1;
+    String[] split = normalString.split("");
+    StringBuilder builder = new StringBuilder();
+    builder.append(ChatColor.WHITE);
+    for (int i = 0; i < index - 2; i++) {
+      builder.append(split[i]);
+    }
+    for (int i = index - 2; i <= index; i++)
+    {
+      if (!(i >= split.length) && (i >= 0)) {
+        builder.append(ChatColor.GOLD).append(split[i]);
       }
     }
-    for (Integer index : spaceIndex) {
-      stringBuilder.insert(index * 3, " ");
+    builder.append(ChatColor.WHITE);
+    for (int i = index + 1; i < split.length; i++) {
+      builder.append(split[i]);
     }
-    return stringBuilder.toString();
+    return builder.toString();
   }
 
   private static ItemStack normalGlassPane = new ItemStack(160, 1, (short) 0);

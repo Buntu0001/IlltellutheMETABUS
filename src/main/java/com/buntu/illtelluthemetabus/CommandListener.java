@@ -1,9 +1,14 @@
 package com.buntu.illtelluthemetabus;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class CommandListener implements CommandExecutor {
   @Override
@@ -38,10 +43,11 @@ public class CommandListener implements CommandExecutor {
             player.sendMessage(Util.translate(String.format("&4난이도: %s", question.getDifficulty())));
             player.sendMessage(Util.translate(String.format("&b정답: %d번", question.getAnswer())));
             player.sendMessage(Util.translate(String.format("&a점수: %d점", question.getScore())));
-            player.sendMessage(Util.translate(String.format("&dNPC: %d", question.getNPC())));
+            player.sendMessage(Util.translate(String.format("&dNPC: %s", question.getNPC())));
             return true;
           } catch (Exception ex) {
             player.sendMessage(Util.translate("&c[오류] &f알 수 없는 문제 이름입니다."));
+            ex.printStackTrace();
             return true;
           }
         }

@@ -6,6 +6,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MakeGui {
   public static Inventory getNormalGUI(Inventory inventory, Player player, Question question) {
     ItemStack questionBook = new ItemStack(Material.ENCHANTED_BOOK); // slot 4
@@ -13,6 +16,23 @@ public class MakeGui {
     questionBookMeta.setDisplayName(Util.translate(question.getContext()));
     questionBookMeta.setLore(Util.translate(question.getContextLores()));
     questionBook.setItemMeta(questionBookMeta);
+
+    ItemStack netherStar = new ItemStack(Material.NETHER_STAR);
+    ItemMeta netherStarMeta = netherStar.getItemMeta();
+    netherStarMeta.setDisplayName(Util.translate("&a정보"));
+    ArrayList<String> lore = new ArrayList<>();
+    lore.add(Util.translate("&7난이도: " + question.getDifficulty()));
+    lore.add(Util.translate("&7점수: " + question.getScore()));
+    netherStarMeta.setLore(lore);
+    netherStar.setItemMeta(netherStarMeta);
+
+    ItemStack barrier = new ItemStack(Material.BARRIER);
+    ItemMeta barrierMeta = barrier.getItemMeta();
+    barrierMeta.setDisplayName(Util.translate("&c포기하기"));
+    lore.clear();
+    lore.add(Util.translate("&7클릭 시 문제를 포기합니다."));
+    barrier.setItemMeta(barrierMeta);
+
 
     // slot 11 ~ 15
 
@@ -42,6 +62,8 @@ public class MakeGui {
     questionFifthOptions.setItemMeta(questionFifthOptionsMeta);
 
     inventory.setItem(4, questionBook);
+    inventory.setItem(3, netherStar);
+    inventory.setItem(5, barrier);
     inventory.setItem(11, questionFirstOptions);
     inventory.setItem(12, questionSecondOptions);
     inventory.setItem(13, questionThirdOptions);

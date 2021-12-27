@@ -15,6 +15,7 @@ public class ScoreBoardManager {
   public static void setScoreBoardTitle(String title) {
     scoreBoardTitle = title;
   }
+  public static String getScoreBoardTitle() {return scoreBoardTitle;}
 
   public static void repeatUpdateScoreBoard() {
     updateTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
@@ -31,8 +32,8 @@ public class ScoreBoardManager {
       Scoreboard scoreboard = manager.getNewScoreboard();
 
       Objective objective = scoreboard.registerNewObjective("QuestionScore", "dummy");
-      String completeTitle = Util.animatedString(scoreBoardTitle, count++, ChatColor.YELLOW, ChatColor.GOLD);
-      if (count > scoreBoardTitle.length()) {
+      String completeTitle = Util.animatedString(scoreBoardTitle, count++);
+      if (count == scoreBoardTitle.length() + 3) {
         count = 0;
       }
       objective.setDisplayName(completeTitle);
@@ -47,11 +48,20 @@ public class ScoreBoardManager {
 
       for (int i = 0; i < sortList.size(); i++) {
         QuestionPlayerState questionPlayerState = sortList.get(i);
-        Score score = objective.getScore(Util.translate(String.format("&a%s: &c%d&7점",
+        Score score = objective.getScore(Util.translate(String.format("  &a%s: &c%d&7점",
             ChatColor.stripColor(questionPlayerState.getPlayer().getDisplayName()), questionPlayerState.getScore())));
         score.setScore(multipleLineScore--);
       }
       for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+        multipleLineScore = Bukkit.getOnlinePlayers().size() - 1 + 4;
+        Score score2 = objective.getScore(Util.translate(" &7닉네임: &6" + onlinePlayer.getDisplayName()));
+        score2.setScore(multipleLineScore--);
+        Score score3 = objective.getScore(Util.translate(" &7푼 문제: &6" + QuestionPlayerStateList.get(onlinePlayer).getSolvedCount() + "개"));
+        score3.setScore(multipleLineScore--);
+        Score score4 = objective.getScore(Util.translate(""));
+        score4.setScore(multipleLineScore--);
+        Score score5 = objective.getScore(Util.translate(" &e랭킹 &o(오름차순)"));
+        score5.setScore(multipleLineScore--);
         onlinePlayer.setScoreboard(scoreboard);
       }
     }

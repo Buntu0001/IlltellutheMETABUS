@@ -47,7 +47,11 @@ class QuestionPlayerState {
     return this.score;
   }
 
-  public Boolean getSolvedQuestion(Question question) {
+  public Boolean isSolved(Question question) {
     return solvedQuestion.contains(question);
+  }
+
+  public Integer getSolvedCount() {
+    return this.solvedQuestion.size();
   }
 }

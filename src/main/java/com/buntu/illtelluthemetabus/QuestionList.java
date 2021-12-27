@@ -13,15 +13,15 @@ public class QuestionList {
   }
 
   public static void remove(String questionTitle) {
-    questionMap.remove(questionTitle);
+    questionMap.remove(ChatColor.stripColor(questionTitle));
   }
 
   public static Question get(String questionTitle) {
-    return questionMap.get(questionTitle);
+    return questionMap.get(ChatColor.stripColor(questionTitle));
   }
 
   public static Boolean contain(String questionTitle) {
-    return questionMap.containsKey(ChatColor.stripColor(questionTitle));
+    return questionMap.containsKey(ChatColor.stripColor(ChatColor.stripColor(questionTitle)));
   }
 
   public static void initNPCMap() {
@@ -32,11 +32,7 @@ public class QuestionList {
   }
 
   public static Question getNPC(String name) {
-    if (questionNPCMap.containsKey(name)) {
-      return questionNPCMap.get(name);
-    } else {
-      return null;
-    }
+    return questionNPCMap.getOrDefault(name, null);
   }
 
   public static void clear() {

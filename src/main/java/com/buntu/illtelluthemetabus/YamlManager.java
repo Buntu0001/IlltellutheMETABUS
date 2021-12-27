@@ -15,6 +15,10 @@ public class YamlManager {
     yamlInitialize();
   }
 
+  private void reloadYamlObject() {
+    settingYml = YamlConfiguration.loadConfiguration(settingFile);
+  }
+
   private void yamlInitialize() {
     if (!settingFile.exists()) {
       System.out.println("question.yml 파일을 생성합니다.");
@@ -73,7 +77,7 @@ public class YamlManager {
   public void retrieveData() {
     try {
       QuestionList.clear();
-
+      reloadYamlObject();
       for (String node : settingYml.getConfigurationSection("question").getKeys(false)) {
         String title = String.valueOf(node);
         String context = String.valueOf(settingYml.get("question." + node + ".문제내용"));

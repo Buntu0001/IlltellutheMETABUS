@@ -1,5 +1,7 @@
 package com.buntu.illtelluthemetabus;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -18,7 +20,7 @@ public final class Main extends JavaPlugin {
     System.out.println(pluginFolder.getPath());
     Util.initaillizeGlassPane();
 
-    ScoreBoardManager.setScoreBoardTitle("획득 점수");
+    ScoreBoardManager.setScoreBoardTitle("AICodingMETAVERSE");
     ScoreBoardManager.repeatUpdateScoreBoard();
 
     getCommand("문제").setExecutor(new CommandListener());
