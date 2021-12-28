@@ -56,7 +56,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RunManager">
     <configuration name="IlltellutheMETABUS build" type="MavenRunConfiguration" factoryName="Maven">
@@ -166,6 +166,8 @@
       <workItem from="1638850999163" duration="713000" />
       <workItem from="1640531396222" duration="745000" />
       <workItem from="1640617566102" duration="14297000" />
+      <workItem from="1640701037539" duration="359000" />
+      <workItem from="1640701924871" duration="12294000" />
     </task>
     <servers />
   </component>
@@ -182,5 +184,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
