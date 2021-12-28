@@ -1,6 +1,7 @@
 /root/GitHub/Java/IlltellutheMETABUS/src/main/java/com/buntu/illtelluthemetabus/GameManager.java
 /root/GitHub/Java/IlltellutheMETABUS/src/main/java/com/buntu/illtelluthemetabus/CommandListener.java
 /root/GitHub/Java/IlltellutheMETABUS/src/main/java/com/buntu/illtelluthemetabus/QuestionPlayerState.java
+/root/GitHub/Java/IlltellutheMETABUS/src/main/java/com/buntu/illtelluthemetabus/IssueHandler.java
 /root/GitHub/Java/IlltellutheMETABUS/src/main/java/com/buntu/illtelluthemetabus/YamlManager.java
 /root/GitHub/Java/IlltellutheMETABUS/src/main/java/com/buntu/illtelluthemetabus/QuestionMisc.java
 /root/GitHub/Java/IlltellutheMETABUS/src/main/java/com/buntu/illtelluthemetabus/MakeGui.java

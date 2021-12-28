@@ -1,25 +1,23 @@
 package com.buntu.illtelluthemetabus;
 
-import org.bukkit.entity.Player;
-
 import java.util.HashMap;
 
 public class QuestionPlayerStateList {
-  private static HashMap<Player, QuestionPlayerState> playerStateMap = new HashMap<>();
+  private static HashMap<String, QuestionPlayerState> playerStateMap = new HashMap<>();
 
   public static void put(QuestionPlayerState questionPlayerState) {
-    playerStateMap.put(questionPlayerState.getPlayer(), questionPlayerState);
+    playerStateMap.put(questionPlayerState.getPlayer().getName(), questionPlayerState);
   }
 
-  public static QuestionPlayerState get(Player player) {
-    return playerStateMap.get(player);
+  public static QuestionPlayerState get(String name) {
+    return playerStateMap.get(name);
   }
 
-  public static Boolean contain(Player player) {
-    return playerStateMap.containsKey(player);
+  public static Boolean contain(String name) {
+    return playerStateMap.containsKey(name);
   }
 
-  public static void remove(Player player) {
-    playerStateMap.remove(player);
+  public static void remove(String name) {
+    playerStateMap.remove(name);
   }
 }

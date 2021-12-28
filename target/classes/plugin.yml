@@ -8,3 +8,6 @@ commands:
   문제보기:
     description: 등록된 문제를 gui로 확인합니다.
     usage: /문제보기 [문제이름]
+  게임:
+    description: 게임을 관리합니다.
+    usage: /게임 [시작/정지]

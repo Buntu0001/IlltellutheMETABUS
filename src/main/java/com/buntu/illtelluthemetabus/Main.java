@@ -1,7 +1,5 @@
 package com.buntu.illtelluthemetabus;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -25,6 +23,7 @@ public final class Main extends JavaPlugin {
 
     getCommand("문제").setExecutor(new CommandListener());
     getCommand("문제보기").setExecutor(new CommandListener());
+    getCommand("게임").setExecutor(new CommandListener());
     getServer().getPluginManager().registerEvents(new EventListener(), this);
   }
 

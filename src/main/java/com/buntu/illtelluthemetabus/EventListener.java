@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 
@@ -20,12 +19,12 @@ public class EventListener implements Listener {
     String inventoryTitle = e.getView().getTopInventory().getTitle();
     if (QuestionList.contain(inventoryTitle)) {
       e.setCancelled(true);
-      if (!QuestionPlayerStateList.get(player).getCompleteSolving()) {
+      if (!QuestionPlayerStateList.get(player.getName()).getCompleteSolving()) {
         Integer clickedInventorySLot = e.getRawSlot();
         if (clickedInventorySLot >= 11 && clickedInventorySLot <= 15) {
           Integer answerNumber = Util.checkAnswer(clickedInventorySLot);
           Question question = QuestionList.get(inventoryTitle);
-          QuestionPlayerState state = QuestionPlayerStateList.get(player);
+          QuestionPlayerState state = QuestionPlayerStateList.get(player.getName());
           if (answerNumber == question.getAnswer()) {
             // make commentary GUI
             QuestionMisc.completeQuestion(state);
@@ -40,9 +39,13 @@ public class EventListener implements Listener {
 
   @EventHandler
   public void onPlayerNPCRightClickEvent(NPCRightClickEvent e) {
-    String npcName = e.getNPC().getName();
-    Question question = QuestionList.getNPC(npcName);
-    QuestionMisc.initSolvingQuestion(e.getClicker(), question);
+    if (Util.questionAvailable) {
+      String npcName = e.getNPC().getName();
+      Question question = QuestionList.getNPC(npcName);
+      QuestionMisc.initSolvingQuestion(e.getClicker(), question);
+    } else {
+      e.getClicker().sendMessage(Util.translate("&c[METAVERSE] &7서비스 이용시간이 아닙니다."));
+    }
   }
 
   @EventHandler
@@ -50,11 +53,11 @@ public class EventListener implements Listener {
     Player player = (Player) e.getPlayer();
     String inventoryTitle = e.getView().getTopInventory().getTitle();
     if (QuestionList.contain(inventoryTitle)) {
-      if (QuestionPlayerStateList.get(player).getCompleteSolving()) {
+      if (QuestionPlayerStateList.get(player.getName()).getCompleteSolving()) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
           @Override
           public void run() {
-            QuestionMisc.makeGUI(GUI_TYPE.END, player, QuestionPlayerStateList.get(player).getQuestion());
+            QuestionMisc.makeGUI(GUI_TYPE.END, player, QuestionPlayerStateList.get(player.getName()).getQuestion());
           }
         }, 1L);
       } else {
@@ -64,13 +67,11 @@ public class EventListener implements Listener {
 
   @EventHandler
   public void onPlayerJoin(PlayerJoinEvent e) {
-    QuestionPlayerState state = new QuestionPlayerState(e.getPlayer());
-    QuestionPlayerStateList.put(state);
-  }
-
-  @EventHandler
-  public void onPlayerQuit(PlayerQuitEvent e) {
-    Player player = e.getPlayer();
-    QuestionPlayerStateList.remove(player);
+    if (!QuestionPlayerStateList.contain(e.getPlayer().getName())) {
+      QuestionPlayerState state = new QuestionPlayerState(e.getPlayer());
+      QuestionPlayerStateList.put(state);
+    } else {
+      QuestionPlayerStateList.get(e.getPlayer().getName()).setPlayer(e.getPlayer());
+    }
   }
 }

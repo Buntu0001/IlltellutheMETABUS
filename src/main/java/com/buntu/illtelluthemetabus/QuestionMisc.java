@@ -10,8 +10,8 @@ import java.util.Objects;
 
 public class QuestionMisc {
   public static void initSolvingQuestion(Player player, Question question) {
-    if (!QuestionPlayerStateList.get(player).isSolved(question)) {
-      QuestionPlayerState state = QuestionPlayerStateList.get(player);
+    if (!QuestionPlayerStateList.get(player.getName()).isSolved(question)) {
+      QuestionPlayerState state = QuestionPlayerStateList.get(player.getName());
       state.setQuestion(question);
 
       makeGUI(GUI_TYPE.NORMAL, player, question);

@@ -34,7 +34,7 @@ public class ScoreBoardManager {
     ArrayList<QuestionPlayerState> sortList = new ArrayList<>();
     for (Player player : Bukkit.getOnlinePlayers()) {
       if (!player.isOp()) {
-        sortList.add(QuestionPlayerStateList.get(player));
+        sortList.add(QuestionPlayerStateList.get(player.getName()));
       }
     }
     sortList = Util.reverseSequentialSort(sortList);
@@ -55,7 +55,8 @@ public class ScoreBoardManager {
           nicknameScore.setScore(multipleLine--);
 
           Score solvedCount = obj
-              .getScore(Util.translate(" &7푼 문제: &6" + QuestionPlayerStateList.get(player).getSolvedCount() + "개"));
+              .getScore(
+                  Util.translate(" &7푼 문제: &6" + QuestionPlayerStateList.get(player.getName()).getSolvedCount() + "개"));
           solvedCount.setScore(multipleLine--);
 
           Score spilitter_1 = obj.getScore("");

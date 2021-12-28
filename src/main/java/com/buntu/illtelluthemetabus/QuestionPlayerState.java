@@ -15,6 +15,17 @@ class QuestionPlayerState {
     this.player = player;
   }
 
+  public void resetInfo() {
+    this.question = null;
+    this.score = 0;
+    this.solvedQuestion.clear();
+    this.completeSolving = false;
+  }
+
+  public void setPlayer(Player player) {
+    this.player = player;
+  }
+
   public Player getPlayer() {
     return player;
   }
