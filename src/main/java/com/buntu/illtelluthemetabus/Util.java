@@ -95,8 +95,7 @@ public class Util {
     for (int i = 0; i < index - 2; i++) {
       builder.append(split[i]);
     }
-    for (int i = index - 2; i <= index; i++)
-    {
+    for (int i = index - 2; i <= index; i++) {
       if (!(i >= split.length) && (i >= 0)) {
         builder.append(ChatColor.GOLD).append(split[i]);
       }

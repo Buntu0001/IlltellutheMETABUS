@@ -20,17 +20,19 @@ public class EventListener implements Listener {
     String inventoryTitle = e.getView().getTopInventory().getTitle();
     if (QuestionList.contain(inventoryTitle)) {
       e.setCancelled(true);
-      Integer clickedInventorySLot = e.getRawSlot();
-      if (clickedInventorySLot >= 11 && clickedInventorySLot <= 15) {
-        Integer answerNumber = Util.checkAnswer(clickedInventorySLot);
-        Question question = QuestionList.get(inventoryTitle);
-        QuestionPlayerState state = QuestionPlayerStateList.get(player);
-        if (answerNumber == question.getAnswer()) {
-          // make commentary GUI
-          QuestionMisc.completeQuestion(state);
-        } else {
-          // make commentary GUI
-          QuestionMisc.failQuestion(state);
+      if (!QuestionPlayerStateList.get(player).getCompleteSolving()) {
+        Integer clickedInventorySLot = e.getRawSlot();
+        if (clickedInventorySLot >= 11 && clickedInventorySLot <= 15) {
+          Integer answerNumber = Util.checkAnswer(clickedInventorySLot);
+          Question question = QuestionList.get(inventoryTitle);
+          QuestionPlayerState state = QuestionPlayerStateList.get(player);
+          if (answerNumber == question.getAnswer()) {
+            // make commentary GUI
+            QuestionMisc.completeQuestion(state);
+          } else {
+            // make commentary GUI
+            QuestionMisc.failQuestion(state);
+          }
         }
       }
     }

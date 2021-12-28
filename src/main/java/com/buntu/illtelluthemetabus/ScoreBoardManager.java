@@ -1,7 +1,6 @@
 package com.buntu.illtelluthemetabus;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
@@ -15,7 +14,10 @@ public class ScoreBoardManager {
   public static void setScoreBoardTitle(String title) {
     scoreBoardTitle = title;
   }
-  public static String getScoreBoardTitle() {return scoreBoardTitle;}
+
+  public static String getScoreBoardTitle() {
+    return scoreBoardTitle;
+  }
 
   public static void repeatUpdateScoreBoard() {
     updateTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
@@ -23,46 +25,54 @@ public class ScoreBoardManager {
       public void run() {
         ScoreBoardManager.updateScoreBoard();
       }
-    }, 0, 5L);
+    }, 0, 2L);
   }
 
   public static void updateScoreBoard() {
-    if (Bukkit.getOnlinePlayers().size() > 0) {
-      ScoreboardManager manager = Bukkit.getScoreboardManager();
-      Scoreboard scoreboard = manager.getNewScoreboard();
-
-      Objective objective = scoreboard.registerNewObjective("QuestionScore", "dummy");
-      String completeTitle = Util.animatedString(scoreBoardTitle, count++);
-      if (count == scoreBoardTitle.length() + 3) {
-        count = 0;
+    ScoreboardManager manager = Bukkit.getScoreboardManager();
+    String completeTitle = Util.animatedString(scoreBoardTitle, count++);
+    ArrayList<QuestionPlayerState> sortList = new ArrayList<>();
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      if (!player.isOp()) {
+        sortList.add(QuestionPlayerStateList.get(player));
       }
-      objective.setDisplayName(completeTitle);
-      objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+    }
+    sortList = Util.reverseSequentialSort(sortList);
+    if (count == scoreBoardTitle.length() + 3) {
+      count = 0;
+    }
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      if (Bukkit.getOnlinePlayers().size() > 0) {
+        if (!player.isOp()) {
+          org.bukkit.scoreboard.Scoreboard board = manager.getNewScoreboard();
+          Objective obj = board.registerNewObjective(player.getName(), "dummy");
+          obj.setDisplayName(completeTitle);
+          obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-      Integer multipleLineScore = Bukkit.getOnlinePlayers().size() - 1;
-      ArrayList<QuestionPlayerState> sortList = new ArrayList<>();
-      for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-        sortList.add(QuestionPlayerStateList.get(onlinePlayer));
-      }
-      sortList = Util.reverseSequentialSort(sortList);
+          Integer multipleLine = Bukkit.getOnlinePlayers().size() + 4;
 
-      for (int i = 0; i < sortList.size(); i++) {
-        QuestionPlayerState questionPlayerState = sortList.get(i);
-        Score score = objective.getScore(Util.translate(String.format("  &a%s: &c%d&7점",
-            ChatColor.stripColor(questionPlayerState.getPlayer().getDisplayName()), questionPlayerState.getScore())));
-        score.setScore(multipleLineScore--);
-      }
-      for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-        multipleLineScore = Bukkit.getOnlinePlayers().size() - 1 + 4;
-        Score score2 = objective.getScore(Util.translate(" &7닉네임: &6" + onlinePlayer.getDisplayName()));
-        score2.setScore(multipleLineScore--);
-        Score score3 = objective.getScore(Util.translate(" &7푼 문제: &6" + QuestionPlayerStateList.get(onlinePlayer).getSolvedCount() + "개"));
-        score3.setScore(multipleLineScore--);
-        Score score4 = objective.getScore(Util.translate(""));
-        score4.setScore(multipleLineScore--);
-        Score score5 = objective.getScore(Util.translate(" &e랭킹 &o(오름차순)"));
-        score5.setScore(multipleLineScore--);
-        onlinePlayer.setScoreboard(scoreboard);
+          Score nicknameScore = obj.getScore(Util.translate(" &7닉네임: &6" + player.getDisplayName()));
+          nicknameScore.setScore(multipleLine--);
+
+          Score solvedCount = obj
+              .getScore(Util.translate(" &7푼 문제: &6" + QuestionPlayerStateList.get(player).getSolvedCount() + "개"));
+          solvedCount.setScore(multipleLine--);
+
+          Score spilitter_1 = obj.getScore("");
+          spilitter_1.setScore(multipleLine--);
+
+          Score rank = obj.getScore(Util.translate(" &e랭킹 &o(오름차순)"));
+          rank.setScore(multipleLine--);
+
+          for (int i = 0; i < sortList.size(); i++) {
+            QuestionPlayerState state = sortList.get(i);
+            Score score = obj.getScore(
+                Util.translate(String.format("  &a%s: &c%d점", state.getPlayer().getDisplayName(), state.getScore())));
+            score.setScore(multipleLine--);
+          }
+
+          player.setScoreboard(board);
+        }
       }
     }
   }

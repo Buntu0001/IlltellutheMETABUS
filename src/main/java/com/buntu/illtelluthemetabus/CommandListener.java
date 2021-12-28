@@ -1,14 +1,14 @@
 package com.buntu.illtelluthemetabus;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class CommandListener implements CommandExecutor {
   @Override
@@ -17,8 +17,19 @@ public class CommandListener implements CommandExecutor {
     if (label.equalsIgnoreCase("문제")) {
       if (args.length == 1) {
         if (args[0].equalsIgnoreCase("리로드")) {
-          player.sendMessage(Util.translate("&6[문제] &fquestion.yml 파일을 리로드합니다."));
-          Util.yamlManager.retrieveData();
+          try {
+            ArrayList<String> tee = new ArrayList<>();
+            tee.add("HI");
+            player.sendMessage(tee.get(10));
+            player.sendMessage(Util.translate("&6[문제] &fquestion.yml 파일을 리로드합니다."));
+            Util.yamlManager.retrieveData();
+          } catch (Exception ex) {
+            HashMap<String, String> arg = new HashMap<>();
+            arg.put("label", label);
+            arg.put("player", player.getName());
+            arg.put("args size", String.valueOf(args.length));
+            IssueHandler.errorSend("IlltellutheMETABUS", "onCommand", arg, ex.getMessage());
+          }
           return true;
         } else {
           String questionTitle = args[0];
