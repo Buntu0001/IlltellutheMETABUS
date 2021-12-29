@@ -12,18 +12,19 @@ import java.util.HashMap;
 
 public class MakeGui {
     public static Inventory getNormalGUI(Inventory inventory, Player player, Question question) {
+        Question quest = question;
         ItemStack questionBook = new ItemStack(Material.ENCHANTED_BOOK); // slot 4
         ItemMeta questionBookMeta = questionBook.getItemMeta();
         questionBookMeta.setDisplayName(Util.translate("&3문제"));
 
-        String[] splitContext = question.getContext().split("/n/");
+        String[] splitContext = quest.getContext().split("/n/");
         ArrayList<String> context = new ArrayList<>();
         for (int i = 0; i < splitContext.length; i++) {
             context.add(Util.translate(splitContext[i]));
         }
-        if (question.getContextLores().size() > 0) {
+        if (quest.getContextLores().size() > 0) {
             context.add("");
-            context.addAll(Util.translate(question.getContextLores()));
+            context.addAll(Util.translate(quest.getContextLores()));
         }
         questionBookMeta.setLore(Util.translate(context));
         questionBook.setItemMeta(questionBookMeta);
@@ -32,8 +33,8 @@ public class MakeGui {
         ItemMeta netherStarMeta = netherStar.getItemMeta();
         netherStarMeta.setDisplayName(Util.translate("&e문제 정보"));
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(Util.translate("&7문제 난이도: " + question.getDifficulty()));
-        lore.add(Util.translate("&7점수: &b" + question.getScore()));
+        lore.add(Util.translate("&7문제 난이도: " + quest.getDifficulty()));
+        lore.add(Util.translate("&7점수: &b" + quest.getScore()));
         netherStarMeta.setLore(lore);
         netherStar.setItemMeta(netherStarMeta);
 
@@ -49,7 +50,7 @@ public class MakeGui {
 
         ItemStack questionFirstOptions = new ItemStack(4870, 1, (short) 8);
         ItemMeta questionFirstOptionsMeta = questionFirstOptions.getItemMeta();
-        questionFirstOptionsMeta.setDisplayName(Util.translate("&f① &e" + question.getOptions().get(0)));
+        questionFirstOptionsMeta.setDisplayName(Util.translate("&f① &e" + quest.getOptions().get(0)));
         ArrayList<String> optionLore = new ArrayList<>();
         optionLore.add(Util.translate("&7클릭 시 &61번&7을 선택합니다."));
         questionFirstOptionsMeta.setLore(optionLore);
@@ -57,7 +58,7 @@ public class MakeGui {
 
         ItemStack questionSecondOptions = new ItemStack(4871, 1, (short) 0);
         ItemMeta questionSecondOptionsMeta = questionSecondOptions.getItemMeta();
-        questionSecondOptionsMeta.setDisplayName(Util.translate("&f② &e" + question.getOptions().get(1)));
+        questionSecondOptionsMeta.setDisplayName(Util.translate("&f② &e" + quest.getOptions().get(1)));
         optionLore.clear();
         optionLore.add(Util.translate("&7클릭 시 &62번&7을 선택합니다."));
         questionSecondOptionsMeta.setLore(optionLore);
@@ -65,7 +66,7 @@ public class MakeGui {
 
         ItemStack questionThirdOptions = new ItemStack(4871, 1, (short) 8);
         ItemMeta questionThirdOptionsMeta = questionThirdOptions.getItemMeta();
-        questionThirdOptionsMeta.setDisplayName(Util.translate("&f③ &e" + question.getOptions().get(2)));
+        questionThirdOptionsMeta.setDisplayName(Util.translate("&f③ &e" + quest.getOptions().get(2)));
         optionLore.clear();
         optionLore.add(Util.translate("&7클릭 시 &63번&7을 선택합니다."));
         questionThirdOptionsMeta.setLore(optionLore);
@@ -73,7 +74,7 @@ public class MakeGui {
 
         ItemStack questionFourthOptions = new ItemStack(4872, 1, (short) 0);
         ItemMeta questionFourthOptionsMeta = questionFourthOptions.getItemMeta();
-        questionFourthOptionsMeta.setDisplayName(Util.translate("&f④ &e" + question.getOptions().get(3)));
+        questionFourthOptionsMeta.setDisplayName(Util.translate("&f④ &e" + quest.getOptions().get(3)));
         optionLore.clear();
         optionLore.add(Util.translate("&7클릭 시 &64번&7을 선택합니다."));
         questionFourthOptionsMeta.setLore(optionLore);
@@ -81,7 +82,7 @@ public class MakeGui {
 
         ItemStack questionFifthOptions = new ItemStack(4872, 1, (short) 8);
         ItemMeta questionFifthOptionsMeta = questionFifthOptions.getItemMeta();
-        questionFifthOptionsMeta.setDisplayName(Util.translate("&f⑤ &e" + question.getOptions().get(4)));
+        questionFifthOptionsMeta.setDisplayName(Util.translate("&f⑤ &e" + quest.getOptions().get(4)));
         optionLore.clear();
         optionLore.add(Util.translate("&7클릭 시 &65번&7을 선택합니다."));
         questionFifthOptionsMeta.setLore(optionLore);
@@ -113,18 +114,19 @@ public class MakeGui {
     }
 
     public static Inventory getCommentaryGUI(Inventory inventory, Player player, Question question, Boolean isCorrect) {
+        Question quest = question;
         ItemStack questionBook = new ItemStack(Material.ENCHANTED_BOOK); // slot 4
         ItemMeta questionBookMeta = questionBook.getItemMeta();
-        questionBookMeta.setDisplayName(Util.translate(question.getContext()));
-        questionBookMeta.setLore(Util.translate(question.getContextLores()));
+        questionBookMeta.setDisplayName(Util.translate(quest.getContext()));
+        questionBookMeta.setLore(Util.translate(quest.getContextLores()));
         questionBook.setItemMeta(questionBookMeta);
 
         ItemStack netherStar = new ItemStack(Material.NETHER_STAR);
         ItemMeta netherStarMeta = netherStar.getItemMeta();
         netherStarMeta.setDisplayName(Util.translate("&e문제 정보"));
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(Util.translate("&7문제 난이도: " + question.getDifficulty()));
-        lore.add(Util.translate("&7점수: &b" + question.getScore()));
+        lore.add(Util.translate("&7문제 난이도: " + quest.getDifficulty()));
+        lore.add(Util.translate("&7점수: &b" + quest.getScore()));
         netherStarMeta.setLore(lore);
         netherStar.setItemMeta(netherStarMeta);
 
@@ -133,7 +135,7 @@ public class MakeGui {
         sunFlowerMeta.setDisplayName(Util.translate("&6정답 여부"));
         if (isCorrect) {
             lore.clear();
-            lore.add(Util.translate(String.format("&a정답&f을 맞히어, &c%d점&f을 획득했습니다.", question.getScore())));
+            lore.add(Util.translate(String.format("&a정답&f을 맞히어, &c%d점&f을 획득했습니다.", quest.getScore())));
             sunFlowerMeta.setLore(lore);
             sunFlower.setItemMeta(sunFlowerMeta);
         } else {
@@ -145,7 +147,7 @@ public class MakeGui {
 
         ItemStack questionFirstOptions = new ItemStack(4870, 1, (short) 8);
         ItemMeta questionFirstOptionsMeta = questionFirstOptions.getItemMeta();
-        questionFirstOptionsMeta.setDisplayName(Util.translate("&f① &e" + question.getOptions().get(0)));
+        questionFirstOptionsMeta.setDisplayName(Util.translate("&f① &e" + quest.getOptions().get(0)));
         ArrayList<String> optionLore = new ArrayList<>();
         optionLore.add(Util.translate("&7클릭 시 &61번&7을 선택합니다."));
         questionFirstOptionsMeta.setLore(optionLore);
@@ -153,7 +155,7 @@ public class MakeGui {
 
         ItemStack questionSecondOptions = new ItemStack(4871, 1, (short) 0);
         ItemMeta questionSecondOptionsMeta = questionSecondOptions.getItemMeta();
-        questionSecondOptionsMeta.setDisplayName(Util.translate("&f② &e" + question.getOptions().get(1)));
+        questionSecondOptionsMeta.setDisplayName(Util.translate("&f② &e" + quest.getOptions().get(1)));
         optionLore.clear();
         optionLore.add(Util.translate("&7클릭 시 &62번&7을 선택합니다."));
         questionSecondOptionsMeta.setLore(optionLore);
@@ -161,7 +163,7 @@ public class MakeGui {
 
         ItemStack questionThirdOptions = new ItemStack(4871, 1, (short) 8);
         ItemMeta questionThirdOptionsMeta = questionThirdOptions.getItemMeta();
-        questionThirdOptionsMeta.setDisplayName(Util.translate("&f③ &e" + question.getOptions().get(2)));
+        questionThirdOptionsMeta.setDisplayName(Util.translate("&f③ &e" + quest.getOptions().get(2)));
         optionLore.clear();
         optionLore.add(Util.translate("&7클릭 시 &63번&7을 선택합니다."));
         questionThirdOptionsMeta.setLore(optionLore);
@@ -169,7 +171,7 @@ public class MakeGui {
 
         ItemStack questionFourthOptions = new ItemStack(4872, 1, (short) 0);
         ItemMeta questionFourthOptionsMeta = questionFourthOptions.getItemMeta();
-        questionFourthOptionsMeta.setDisplayName(Util.translate("&f④ &e" + question.getOptions().get(3)));
+        questionFourthOptionsMeta.setDisplayName(Util.translate("&f④ &e" + quest.getOptions().get(3)));
         optionLore.clear();
         optionLore.add(Util.translate("&7클릭 시 &64번&7을 선택합니다."));
         questionFourthOptionsMeta.setLore(optionLore);
@@ -177,7 +179,7 @@ public class MakeGui {
 
         ItemStack questionFifthOptions = new ItemStack(4872, 1, (short) 8);
         ItemMeta questionFifthOptionsMeta = questionFifthOptions.getItemMeta();
-        questionFifthOptionsMeta.setDisplayName(Util.translate("&f⑤ &e" + question.getOptions().get(4)));
+        questionFifthOptionsMeta.setDisplayName(Util.translate("&f⑤ &e" + quest.getOptions().get(4)));
         optionLore.clear();
         optionLore.add(Util.translate("&7클릭 시 &65번&7을 선택합니다."));
         questionFifthOptionsMeta.setLore(optionLore);
@@ -188,9 +190,9 @@ public class MakeGui {
 
         ItemStack correctFirstOptions = new ItemStack(4890, 1, (short) 8);
         ItemMeta correctFirstOptionsMeta = correctFirstOptions.getItemMeta();
-        correctFirstOptionsMeta.setDisplayName(Util.translate("&f① &e" + question.getOptions().get(0)));
-        if (question.getCommentary().size() > 0) {
-            correctFirstOptionsMeta.setLore(Util.translate(question.getCommentary()));
+        correctFirstOptionsMeta.setDisplayName(Util.translate("&f① &e" + quest.getOptions().get(0)));
+        if (quest.getCommentary().size() > 0) {
+            correctFirstOptionsMeta.setLore(Util.translate(quest.getCommentary()));
         } else {
             correctFirstOptionsMeta.setLore(Util.translate(ls));
         }
@@ -198,9 +200,9 @@ public class MakeGui {
 
         ItemStack correctSecondOptions = new ItemStack(4891, 1, (short) 0);
         ItemMeta correctSecondOptionsMeta = correctSecondOptions.getItemMeta();
-        correctSecondOptionsMeta.setDisplayName(Util.translate("&f② &e" + question.getOptions().get(1)));
-        if (question.getCommentary().size() > 0) {
-            correctSecondOptionsMeta.setLore(Util.translate(question.getCommentary()));
+        correctSecondOptionsMeta.setDisplayName(Util.translate("&f② &e" + quest.getOptions().get(1)));
+        if (quest.getCommentary().size() > 0) {
+            correctSecondOptionsMeta.setLore(Util.translate(quest.getCommentary()));
         } else {
             correctSecondOptionsMeta.setLore(Util.translate(ls));
         }
@@ -208,9 +210,9 @@ public class MakeGui {
 
         ItemStack correctThirdOptions = new ItemStack(4891, 1, (short) 8);
         ItemMeta correctThirdOptionsMeta = correctThirdOptions.getItemMeta();
-        correctThirdOptionsMeta.setDisplayName(Util.translate("&f③ &e" + question.getOptions().get(2)));
-        if (question.getCommentary().size() > 0) {
-            correctThirdOptionsMeta.setLore(Util.translate(question.getCommentary()));
+        correctThirdOptionsMeta.setDisplayName(Util.translate("&f③ &e" + quest.getOptions().get(2)));
+        if (quest.getCommentary().size() > 0) {
+            correctThirdOptionsMeta.setLore(Util.translate(quest.getCommentary()));
         } else {
             correctThirdOptionsMeta.setLore(Util.translate(ls));
         }
@@ -218,9 +220,9 @@ public class MakeGui {
 
         ItemStack correctFourthOptions = new ItemStack(4892, 1, (short) 0);
         ItemMeta correctFourthOptionsMeta = correctFourthOptions.getItemMeta();
-        correctFourthOptionsMeta.setDisplayName(Util.translate("&f④ &e" + question.getOptions().get(3)));
-        if (question.getCommentary().size() > 0) {
-            correctFourthOptionsMeta.setLore(Util.translate(question.getCommentary()));
+        correctFourthOptionsMeta.setDisplayName(Util.translate("&f④ &e" + quest.getOptions().get(3)));
+        if (quest.getCommentary().size() > 0) {
+            correctFourthOptionsMeta.setLore(Util.translate(quest.getCommentary()));
         } else {
             correctFourthOptionsMeta.setLore(Util.translate(ls));
         }
@@ -228,15 +230,15 @@ public class MakeGui {
 
         ItemStack correctFifthOptions = new ItemStack(4892, 1, (short) 8);
         ItemMeta correctFifthOptionsMeta = correctFifthOptions.getItemMeta();
-        correctFifthOptionsMeta.setDisplayName(Util.translate("&f⑤ &e" + question.getOptions().get(4)));
-        if (question.getCommentary().size() > 0) {
-            correctFifthOptionsMeta.setLore(Util.translate(question.getCommentary()));
+        correctFifthOptionsMeta.setDisplayName(Util.translate("&f⑤ &e" + quest.getOptions().get(4)));
+        if (quest.getCommentary().size() > 0) {
+            correctFifthOptionsMeta.setLore(Util.translate(quest.getCommentary()));
         } else {
             correctFifthOptionsMeta.setLore(Util.translate(ls));
         }
         correctFifthOptions.setItemMeta(correctFifthOptionsMeta);
 
-        switch (question.getAnswer()) {
+        switch (quest.getAnswer()) {
             case 1:
                 inventory.setItem(11, correctFirstOptions);
                 inventory.setItem(12, questionSecondOptions);

@@ -1,8 +1,10 @@
 package com.buntu.illtelluthemetabus;
 
 import org.bukkit.ChatColor;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
@@ -19,7 +21,8 @@ public class Util {
     public enum GUI_TYPE {
         NORMAL,
         END_CORRECT,
-        END_INCORRECT
+        END_INCORRECT,
+        END
     };
 
     public static Boolean questionAvailable = false;
@@ -136,6 +139,15 @@ public class Util {
                 return wrongGlassPane;
             default:
                 return new ItemStack(160, 1, (short) 0);
+        }
+    }
+
+    public static GUI_TYPE checkGUIType(Inventory inventory) {
+        ItemStack glasspane = inventory.getItem(0);
+        if (glasspane.getData() != new MaterialData(160, (byte) 0)) {
+            return GUI_TYPE.END;
+        } else {
+            return GUI_TYPE.NORMAL;
         }
     }
 

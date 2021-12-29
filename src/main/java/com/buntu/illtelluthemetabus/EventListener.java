@@ -22,7 +22,7 @@ public class EventListener implements Listener {
         String inventoryTitle = e.getView().getTopInventory().getTitle();
         if (QuestionList.contain(inventoryTitle)) {
             e.setCancelled(true);
-            if (!QuestionPlayerStateList.get(player.getName()).getCompleteSolving()) {
+            if (Util.checkGUIType(e.getInventory()) == GUI_TYPE.NORMAL) {
                 Integer clickedInventorySLot = e.getRawSlot();
                 if (clickedInventorySLot >= 11 && clickedInventorySLot <= 15) {
                     Integer answerNumber = Util.checkAnswer(clickedInventorySLot);

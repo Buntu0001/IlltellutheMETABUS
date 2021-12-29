@@ -21,43 +21,20 @@ public class QuestionMisc {
     }
 
     public static void completeQuestion(QuestionPlayerState state) {
-        state.setScore(
-                state.getScore() + state.getQuestion().getScore());
+        state.setScore(state.getScore() + state.getQuestion().getScore());
         makeGUI(GUI_TYPE.END_CORRECT, state.getPlayer(), state.getQuestion());
-        state.setCompleteSolving(true);
+        // state.setCompleteSolving(true);
         state.putSolvedQuestion(state.getQuestion());
-        state.setCompleteSolving(false);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
-            @Override
-            public void run() {
-                state.setQuestion(null);
-            }
-        }, 5L);
-        /*
-         * Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
-         * 
-         * @Override
-         * public void run() {
-         * state.getPlayer().closeInventory();
-         * state.setCompleteSolving(false);
-         * state.setQuestion(null);
-         * }
-         * 
-         * }, 20L * 5);
-         */
+        // state.setCompleteSolving(false);
+        state.setQuestion(null);
     }
 
     public static void failQuestion(QuestionPlayerState state) {
         makeGUI(GUI_TYPE.END_INCORRECT, state.getPlayer(), state.getQuestion());
-        state.setCompleteSolving(true);
+        // state.setCompleteSolving(true);
         state.putSolvedQuestion(state.getQuestion());
-        state.setCompleteSolving(false);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
-            @Override
-            public void run() {
-                state.setQuestion(null);
-            }
-        }, 5L);
+        // state.setCompleteSolving(false);
+        state.setQuestion(null);
         /*
          * Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
          * 
