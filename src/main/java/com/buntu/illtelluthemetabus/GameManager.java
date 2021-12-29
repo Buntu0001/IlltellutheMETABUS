@@ -3,8 +3,6 @@ package com.buntu.illtelluthemetabus;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -15,7 +13,7 @@ import org.bukkit.entity.Player;
 public class GameManager {
     private static Long globalTimer = 0L;
     private static HashMap<String, QuestionPlayerState> ranking = new HashMap<>();
-    private static Integer limitTime = 1;
+    private static Integer limitTime = 3;
     private static Integer timerTaskId = 0;
     private static Integer countDownTaskId = 0;
     private static Integer count = 10;
@@ -49,7 +47,9 @@ public class GameManager {
                 new FileWriter(path))) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 QuestionPlayerState state = QuestionPlayerStateList.get(player.getName());
-                writer.append(String.format("Player name: %s || Player Display Name: %s || Player Score: %d || Player solved count: %d\n", player.getName(), player.getDisplayName(), state.getScore(), state.getSolvedCount()));
+                writer.append(String.format(
+                        "Player name: %s || Player Display Name: %s || Player Score: %d || Player solved count: %d\n",
+                        player.getName(), player.getDisplayName(), state.getScore(), state.getSolvedCount()));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -87,23 +87,26 @@ public class GameManager {
                 @Override
                 public void run() {
                     Util.questionAvailable = true;
+                    globalTimer = System.currentTimeMillis() + (limitTime * 60000);
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         player.sendTitle(Util.translate("&b게임시작!"), "", 0, 20 * 2, 0);
-                        Location gameStartLocation = new Location(Util.plugin.getServer().getWorld("world"), -76, 5, 333);
+                        Location gameStartLocation = new Location(Util.plugin.getServer().getWorld("world"), -76, 5,
+                                333);
                         if (!player.isOp()) {
                             player.teleport(gameStartLocation);
                         }
                     }
                 }
             }, 20L * 13);
-            globalTimer = System.currentTimeMillis() + (limitTime * 60000);
             timerTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Util.plugin, new Runnable() {
                 @Override
                 public void run() {
                     if (isGameEnd() || !Util.questionAvailable) {
                         Bukkit.broadcastMessage(Util.translate("&a[공지] 게임이 종료되었습니다."));
+                        Location startLocation = new Location(Util.plugin.getServer().getWorld("world"), -26, 22, 352);
                         for (Player player : Bukkit.getOnlinePlayers()) {
                             player.sendTitle(Util.translate("&c게임종료!"), "", 0, 20 * 3, 0);
+                            player.teleport(startLocation);
                         }
                         Util.questionAvailable = false;
                         Bukkit.getScheduler().cancelTask(timerTaskId);
@@ -116,7 +119,9 @@ public class GameManager {
                             for (Player player : Bukkit.getOnlinePlayers()) {
                                 player.sendTitle(
                                         Util.translate(
-                                                "&f게임 종료까지 " + "&e" + (int) (Math.floor((globalTimer - System.currentTimeMillis()) / 1000)))
+                                                "&f게임 종료까지 " + "&e"
+                                                        + (int) (Math.floor(
+                                                                (globalTimer - System.currentTimeMillis()) / 1000)))
                                                 + "초",
                                         "", 0, 20, 0);
                             }

@@ -45,7 +45,6 @@ public class MakeGui {
         barrierMeta.setLore(lore);
         barrier.setItemMeta(barrierMeta);
 
-
         // slot 11 ~ 15
 
         ItemStack questionFirstOptions = new ItemStack(4870, 1, (short) 8);
@@ -237,8 +236,6 @@ public class MakeGui {
         }
         correctFifthOptions.setItemMeta(correctFifthOptionsMeta);
 
-
-
         switch (question.getAnswer()) {
             case 1:
                 inventory.setItem(11, correctFirstOptions);
@@ -280,18 +277,32 @@ public class MakeGui {
         inventory.setItem(4, questionBook);
         inventory.setItem(3, netherStar);
         inventory.setItem(5, sunFlower);
-
-        ItemStack glassPane = Util.getGlassPane(5);
-        inventory.setItem(0, glassPane);
-        inventory.setItem(1, glassPane);
-        inventory.setItem(2, glassPane);
-        inventory.setItem(6, glassPane);
-        inventory.setItem(7, glassPane);
-        inventory.setItem(8, glassPane);
-        inventory.setItem(9, glassPane);
-        inventory.setItem(17, glassPane);
-        for (int i = 18; i <= 26; i++) {
-            inventory.setItem(i, glassPane);
+        if (isCorrect) {
+            ItemStack glassPane = Util.getGlassPane(5);
+            inventory.setItem(0, glassPane);
+            inventory.setItem(1, glassPane);
+            inventory.setItem(2, glassPane);
+            inventory.setItem(6, glassPane);
+            inventory.setItem(7, glassPane);
+            inventory.setItem(8, glassPane);
+            inventory.setItem(9, glassPane);
+            inventory.setItem(17, glassPane);
+            for (int i = 18; i <= 26; i++) {
+                inventory.setItem(i, glassPane);
+            }
+        } else {
+            ItemStack glassPane = Util.getGlassPane(14);
+            inventory.setItem(0, glassPane);
+            inventory.setItem(1, glassPane);
+            inventory.setItem(2, glassPane);
+            inventory.setItem(6, glassPane);
+            inventory.setItem(7, glassPane);
+            inventory.setItem(8, glassPane);
+            inventory.setItem(9, glassPane);
+            inventory.setItem(17, glassPane);
+            for (int i = 18; i <= 26; i++) {
+                inventory.setItem(i, glassPane);
+            }
         }
 
         return inventory;

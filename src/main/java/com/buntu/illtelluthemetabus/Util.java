@@ -49,13 +49,13 @@ public class Util {
             if (bufferString.length() == 1) {
                 bufferString = "0" + bufferString;
             }
-            return new Object[]{minutes, bufferString};
+            return new Object[] { minutes, bufferString };
         } else {
             bufferString = String.valueOf(buffer);
             if (bufferString.length() == 1) {
                 bufferString = "0" + bufferString;
             }
-            return new Object[]{0, bufferString};
+            return new Object[] { 0, bufferString };
         }
     }
 
@@ -118,7 +118,7 @@ public class Util {
         ItemMeta wrongGlassPaneMeta = wrongGlassPane.getItemMeta();
 
         normalGlassPaneMeta.setDisplayName(Util.translate("&a잘 생각 해보면 답이 생각날지도?"));
-        correctGlassPaneMeta.setDisplayName(Util.translate("&a어떻게 푸는 것일까요?"));
+        correctGlassPaneMeta.setDisplayName(Util.translate("&a정답!"));
         wrongGlassPaneMeta.setDisplayName(Util.translate("&c다시 한번 생각해 봐요!"));
 
         normalGlassPane.setItemMeta(normalGlassPaneMeta);

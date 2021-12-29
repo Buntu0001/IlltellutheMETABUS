@@ -27,12 +27,7 @@ public class QuestionMisc {
         state.setCompleteSolving(true);
         state.putSolvedQuestion(state.getQuestion());
         state.setCompleteSolving(false);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
-            @Override
-            public void run() {
-                state.setQuestion(null);
-            }
-        }, 5L);
+        state.setQuestion(null);
         /*
          * Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
          * 
@@ -52,12 +47,7 @@ public class QuestionMisc {
         state.setCompleteSolving(true);
         state.putSolvedQuestion(state.getQuestion());
         state.setCompleteSolving(false);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
-            @Override
-            public void run() {
-                state.setQuestion(null);
-            }
-        }, 5L);
+        state.setQuestion(null);
         /*
          * Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
          * 

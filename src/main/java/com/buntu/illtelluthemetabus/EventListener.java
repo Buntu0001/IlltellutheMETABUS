@@ -3,6 +3,7 @@ package com.buntu.illtelluthemetabus;
 import com.buntu.illtelluthemetabus.Util.GUI_TYPE;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +46,7 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPlayerNPCRightClickEvent(NPCRightClickEvent e) {
         if (Util.questionAvailable) {
-            String npcName = e.getNPC().getName();
+            String npcName = ChatColor.stripColor(e.getNPC().getName());
             Question question = QuestionList.getNPC(npcName);
             QuestionMisc.initSolvingQuestion(e.getClicker(), question);
         } else {
@@ -63,9 +64,10 @@ public class EventListener implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Util.plugin, new Runnable() {
                     @Override
                     public void run() {
-                        //QuestionMisc.makeGUI(GUI_TYPE.END_CORRECT, player, QuestionPlayerStateList.get(player.getName()).getQuestion());
+                        // QuestionMisc.makeGUI(GUI_TYPE.END_CORRECT, player,
+                        // QuestionPlayerStateList.get(player.getName()).getQuestion());
                         if (QuestionPlayerStateList.get(player.getName()).getCompleteSolving()) {
-                            player.openInventory(inventory);
+                            // player.openInventory(inventory);
                         }
                     }
                 }, 1L);
@@ -84,7 +86,7 @@ public class EventListener implements Listener {
             QuestionPlayerStateList.get(player.getName()).setPlayer(player);
         }
         if (!player.isOp()) {
-            Location startLocation = new Location(Util.plugin.getServer().getWorld("world"), -21, 17, 382);
+            Location startLocation = new Location(Util.plugin.getServer().getWorld("world"), -26, 22, 352);
             player.teleport(startLocation);
         }
     }

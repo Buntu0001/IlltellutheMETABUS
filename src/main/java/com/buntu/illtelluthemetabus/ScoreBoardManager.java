@@ -49,15 +49,27 @@ public class ScoreBoardManager {
                     obj.setDisplayName(completeTitle);
                     obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-                    Integer multipleLine = Bukkit.getOnlinePlayers().size() + 4;
+                    Integer multipleLine = Bukkit.getOnlinePlayers().size() + 5;
 
                     Score nicknameScore = obj.getScore(Util.translate(" &7닉네임: &6" + player.getDisplayName()));
                     nicknameScore.setScore(multipleLine--);
 
                     Score solvedCount = obj
                             .getScore(
-                                    Util.translate(" &7푼 문제: &6" + QuestionPlayerStateList.get(player.getName()).getSolvedCount() + "개"));
+                                    Util.translate(" &7푼 문제: &6"
+                                            + QuestionPlayerStateList.get(player.getName()).getSolvedCount() + "개"));
                     solvedCount.setScore(multipleLine--);
+
+                    if (GameManager.getGlobalTimer() > 0) {
+                        Object[] timeSet = Util.secondsToMinutes(GameManager.getGlobalTimer());
+                        Score timer = obj
+                                .getScore(Util.translate(String.format(" &7남은 시간: &6%s분 %s초", timeSet[0], timeSet[1])));
+                        timer.setScore(multipleLine--);
+                    } else {
+                        Score timer = obj
+                                .getScore(Util.translate(String.format(" &7남은 시간: &6%s분 %s초", "0", "0")));
+                        timer.setScore(multipleLine--);
+                    }
 
                     Score spilitter_1 = obj.getScore("");
                     spilitter_1.setScore(multipleLine--);
@@ -68,7 +80,8 @@ public class ScoreBoardManager {
                     for (int i = 0; i < sortList.size(); i++) {
                         QuestionPlayerState state = sortList.get(i);
                         Score score = obj.getScore(
-                                Util.translate(String.format("  &a%s: &c%d점", state.getPlayer().getDisplayName(), state.getScore())));
+                                Util.translate(String.format("  &a%s: &c%d점", state.getPlayer().getDisplayName(),
+                                        state.getScore())));
                         score.setScore(multipleLine--);
                     }
 
